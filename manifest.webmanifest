@@ -7,28 +7,28 @@
     "background_color": "#fff",
     "description": "",
     "icons": [{
-      "src": "./winter.jpg",
+      "src": "./coin.jpg",
       "sizes": "48x48",
-      "type": "image/jpg"
+      "type": "image/png"
     }, {
-      "src": "./winter.jpg",
+      "src": "./coin.png",
       "sizes": "72x72",
-      "type": "image/jpg"
+      "type": "image/png"
     }, {
-      "src": "./winter.jpg",
+      "src": "./coin.png",
       "sizes": "96x96",
-      "type": "image/jpg"
+      "type": "image/png"
     }, {
-      "src": "./winter.jpg",
+      "src": "./coin.png",
       "sizes": "144x144",
-      "type": "image/jpg"
+      "type": "image/png"
     }, {
-      "src": "./winter.jpg",
+      "src": "./coin.png",
       "sizes": "168x168",
-      "type": "image/jpg"
+      "type": "image/png"
     }, {
-      "src": "./winter.jpg",
+      "src": "./coin.png",
       "sizes": "192x192",
-      "type": "image/jpg"
+      "type": "image/png"
     }]
   }

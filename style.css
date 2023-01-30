@@ -2,12 +2,14 @@
     max-width: 600px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    position: relative;
 }
 
 .coin {
-    width: 80%;
+    width: 70%;
     transition: 50ms;
+    position: absolute;
+    top: 30vh;
 }
 
 

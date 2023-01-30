@@ -1,15 +1,13 @@
-var coin 
+var coin
 Main = {
     init: function () {
         console.log('init')
         coin = document.querySelector('.coin')
-        coin.addEventListener('touchstart', function(e){
-            scaleCoin(e)
-        })
-        coin.addEventListener('touchend', function(e){
-            scaleCoin(e)
-        })
-    
+        coin.addEventListener('touchstart', (e) => { scaleCoin(e) })
+        coin.addEventListener('touchend', (e) => { scaleCoin(e) })
+        coin.addEventListener('mousedown', (e) => { scaleCoin(e) })
+        coin.addEventListener('mouseup', (e) => { scaleCoin(e) })
+
     },
     animate: function () {
         // var animation = window.requestAnimationFrame(Main.animate)
@@ -19,10 +17,12 @@ Main = {
 
 
 function scaleCoin(event) {
-    
-    event.type === 'touchstart' ?
-    coin.style.transform = 'scale(.9)' :
-    coin.style.transform = 'scale(1)'
+    if (event.type === 'mousedown' || event.type === 'touchstart'){
+        coin.style.transform = 'scale(.95)'
+    }
+    else {
+        coin.style.transform = 'scale(1)'
+    }
 }
 
 
