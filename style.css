@@ -1,0 +1,13 @@
+.wrapper {
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coin {
+    width: 80%;
+    transition: 50ms;
+}
+
+
