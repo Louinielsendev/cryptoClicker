@@ -23,12 +23,19 @@ Main = {
         Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height)
         Main.drops.forEach((drop, i) => {
             drop.update();
-            if (drop.position.y > Canvas.element.height){
+            
+            if (drop.position.y > Canvas.element.height - drop.height){
                 setTimeout(() => {
-                    Main.drops.splice(i, 1)
-                }, 0)
-                console.log(Main.drops)
+                    const dropFound = Main.drops.find((drop2) => drop2 === drop)
+                    if (dropFound){
+                        Main.drops.splice(i, 1)
+                        console.log(Main.drops)
+                    }
+                    
+                }, 0)    
+               
             }
+           
         });
     }
 }

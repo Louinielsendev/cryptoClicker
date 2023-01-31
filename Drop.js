@@ -1,8 +1,8 @@
-var Drop = function ({position, velocity}) {
+var Drop = function ({position, velocity, size}) {
     this.position = position;
     this.velocity = velocity;
-    this.width = 40;
-    this.height = 40;
+    this.width = size;
+    this.height = size;
     const image = new Image()
     image.src = './coin.png'
     this.image = image

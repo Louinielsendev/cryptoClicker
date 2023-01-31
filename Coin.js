@@ -17,7 +17,7 @@ Coin.prototype.clickDown = function () {
 
 Coin.prototype.clickUp = function () {
     this.image.style.transform = 'scale(1)'
-
+    const randomsize = Math.random() * 25 + 40
     const randomnumber = Math.random() * 400
     var drop = new Drop({
         position: {
@@ -25,8 +25,9 @@ Coin.prototype.clickUp = function () {
             y: 0
         },
         velocity: {
-            y: 1.7
-        }
+            y: randomsize / 40
+        },
+        size: randomsize
     });
     Main.drops.push(drop)
 }
