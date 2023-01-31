@@ -1,7 +1,11 @@
 /*Litila one , Luckiest guy*/
 
+.body{
+    touch-action: pan-y;
+}
+
 .wrapper {
-    max-width: 600px;
+    max-width: 500px;
     display: flex;
     justify-content: center;
     position: relative;

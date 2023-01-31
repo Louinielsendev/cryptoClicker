@@ -1,9 +1,9 @@
 {
     
-    "name": "Bitclicker",
-    "short_name": "bclick",
+    "name": "Crypto Clicker",
+    "short_name": "Crypto Clicker",
     "start_url": "index.html",
-    "display": "standalone",
+    "display": "fullscreen",
     "background_color": "#fff",
     "description": "",
     "icons": [{
