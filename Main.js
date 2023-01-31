@@ -7,11 +7,11 @@ Main = {
         console.log('init')
         const wrapper = document.querySelector('.wrapper')
         wrapper.appendChild(coin.image)
-        canvas = document.querySelector('canvas');
-        c = canvas.getContext('2d');
-        canvas.height = wrapper.offsetHeight
-        canvas.width = wrapper.offsetWidth
-        c.fillRect(0, 0, canvas.width, canvas.height);
+        Canvas.element = document.querySelector('canvas');
+        Canvas.c = Canvas.element.getContext('2d');
+        Canvas.element.height = wrapper.offsetHeight
+        Canvas.element.width = wrapper.offsetWidth
+        Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height);
         Main.animate()
 
     },
@@ -19,11 +19,16 @@ Main = {
 
     animate: function () {
         var animation = window.requestAnimationFrame(Main.animate)
-        console.log(Main.drops)
-        c.fillStyle = 'black';
-        c.fillRect(0, 0, canvas.width, canvas.height)
+        Canvas.c.fillStyle = 'yellow';
+        Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height)
         Main.drops.forEach((drop, i) => {
             drop.update();
+            if (drop.position.y > Canvas.element.height){
+                setTimeout(() => {
+                    Main.drops.splice(i, 1)
+                }, 0)
+                console.log(Main.drops)
+            }
         });
     }
 }

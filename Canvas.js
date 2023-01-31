@@ -1,0 +1,4 @@
+Canvas = {
+    element: '',
+    c: ''
+}

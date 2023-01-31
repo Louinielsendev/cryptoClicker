@@ -6,8 +6,8 @@ var Drop = function ({position, velocity}) {
 }
 
 Drop.prototype.draw = function(){
-    c.fillStyle = 'green';
-    c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    Canvas.c.fillStyle = 'green';
+    Canvas.c.fillRect(this.position.x, this.position.y, this.width, this.height)
 }
 
 Drop.prototype.update = function () {
