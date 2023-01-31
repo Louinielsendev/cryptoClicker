@@ -1,11 +1,19 @@
 /*Litila one , Luckiest guy*/
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .body{
     touch-action: none;
 }
 
 .wrapper {
+    width: 100vw;
     max-width: 500px;
+    height: 100vh;
+    
     display: flex;
     justify-content: center;
     position: relative;

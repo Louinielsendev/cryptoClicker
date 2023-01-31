@@ -1,30 +1,35 @@
-var coin
+var canvas
+var c
+
 Main = {
     init: function () {
+        var coin = new Coin();
         console.log('init')
-        coin = document.querySelector('.coin')
-        coin.addEventListener('touchstart', (e) => { scaleCoin(e) })
-        coin.addEventListener('touchend', (e) => { scaleCoin(e) })
-        coin.addEventListener('mousedown', (e) => { scaleCoin(e) })
-        coin.addEventListener('mouseup', (e) => { scaleCoin(e) })
+        const wrapper = document.querySelector('.wrapper')
+        wrapper.appendChild(coin.image)
+        canvas = document.querySelector('canvas');
+        c = canvas.getContext('2d');
+        canvas.height = wrapper.offsetHeight
+        canvas.width = wrapper.offsetWidth
+        c.fillRect(0, 0, canvas.width, canvas.height);
+        Main.animate()
 
     },
+    drops: [],
+
     animate: function () {
-        // var animation = window.requestAnimationFrame(Main.animate)
-        console.log('ani')
+        var animation = window.requestAnimationFrame(Main.animate)
+        console.log(Main.drops)
+        c.fillStyle = 'black';
+        c.fillRect(0, 0, canvas.width, canvas.height)
+        Main.drops.forEach((drop, i) => {
+            drop.update();
+        });
     }
 }
 
 
-function scaleCoin(event) {
-    if (event.type === 'mousedown' || event.type === 'touchstart'){
-        coin.style.transform = 'scale(.95)'
-    }
-    else {
-        coin.style.transform = 'scale(1)'
-    }
-}
+
 
 
 window.addEventListener('load', Main.init);
-window.addEventListener('load', Main.animate); 
