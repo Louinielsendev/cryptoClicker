@@ -1,7 +1,7 @@
 /*Litila one , Luckiest guy*/
 
 .body{
-    touch-action: pan-y;
+    touch-action: none;
 }
 
 .wrapper {

@@ -3,7 +3,7 @@
     "name": "Crypto Clicker",
     "short_name": "Crypto Clicker",
     "start_url": "index.html",
-    "display": "fullscreen",
+    "display": "standalone",
     "background_color": "#fff",
     "description": "",
     "icons": [{
