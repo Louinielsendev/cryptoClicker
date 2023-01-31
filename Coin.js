@@ -25,7 +25,7 @@ Coin.prototype.clickUp = function () {
             y: 0
         },
         velocity: {
-            y: 2
+            y: 1.7
         }
     });
     Main.drops.push(drop)

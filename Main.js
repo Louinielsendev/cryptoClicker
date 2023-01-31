@@ -19,7 +19,7 @@ Main = {
 
     animate: function () {
         var animation = window.requestAnimationFrame(Main.animate)
-        Canvas.c.fillStyle = 'yellow';
+        Canvas.c.fillStyle = 'blue';
         Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height)
         Main.drops.forEach((drop, i) => {
             drop.update();
