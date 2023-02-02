@@ -3,6 +3,8 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Luckiest Guy', cursive;
+    
 }
 
 .body{
@@ -23,7 +25,55 @@
     width: 70%;
     transition: 50ms;
     position: absolute;
-    top: 30vh;
+    top: 32vh;
 }
 
+.menu {
+    bottom: 0;
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    height: 120px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
 
+.header {
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    top: 0;
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    height: 80px;
+    color: white;
+    letter-spacing: 3px;
+    
+}
+
+.score{
+    font-size: 2em;
+    
+}
+
+.bonuses {
+    width: 100%;
+    position: absolute;
+    top: 80px;
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 1px;
+}
+
+.bonuses div {
+    text-align: center;
+    padding: 10px;
+    font-size: 1em;
+}
+
+.crypto-bonus {
+    color: #05cf05;
+    
+}

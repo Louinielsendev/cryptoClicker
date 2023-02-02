@@ -1,4 +1,6 @@
-var Coin = function () {
+var Coin = function (stats) {
+    this.stats = stats
+    
     const image = new Image()
     image.src = './coin.png'
     this.image = image
@@ -16,6 +18,9 @@ Coin.prototype.clickDown = function () {
 }
 
 Coin.prototype.clickUp = function () {
+    
+   this.stats.setScore()
+    
     this.image.style.transform = 'scale(1)'
     const randomsize = Math.random() * 25 + 40
     const randomnumber = Math.random() * 400
@@ -29,6 +34,8 @@ Coin.prototype.clickUp = function () {
         },
         size: randomsize
     });
+    
     Main.drops.push(drop)
+
 }
 
