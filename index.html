@@ -7,11 +7,13 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0', shrink-to-fit=no">
     <title>Document</title>
-    <script src="Canvas.js"></script>
-    <script src="Main.js"></script>
-    <script src="Coin.js"></script>
-    <script src="Drop.js"></script>
-    <script src="Stats.js"></script>
+    <script src="js/Canvas.js"></script>
+    <script src="js/Main.js"></script>
+    <script src="js/Coin.js"></script>
+    <script src="js/Drop.js"></script>
+    <script src="js/Stats.js"></script>
+    <script src="js/Shop.js"></script>
+    <script src="js/Skin.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
@@ -21,6 +23,9 @@
 
 <body>
     <div class="wrapper">
+        <div class="modal">
+            
+        </div>
         <canvas></canvas>
         <div class="header">
             <div>
@@ -31,13 +36,20 @@
             <div class="bonus">
                 <h3>CRYPTO <br> BONUS</h3>
                 <h3 class="crypto-bonus">100%</h3>
-                
+
             </div>
             <div class="streak">
-                <h3 class="streak-multi">1X</h3>
+                <h3 class="streak-multi">X1</h3>
             </div>
         </div>
-        <div class="menu"></div>
+        <div class="menu">
+            <div class="menu-button shop">
+                <img src="img/shop.png" alt="">
+            </div>
+            <div class="menu-button clicker">
+                <img src="img/clicker.png" alt="">
+            </div>
+        </div>
     </div>
 </body>
 

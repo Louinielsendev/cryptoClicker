@@ -1,9 +1,8 @@
 var Coin = function (stats) {
     this.stats = stats
     
-    const image = new Image()
-    image.src = './coin.png'
-    this.image = image
+    console.log(Main.skins)
+    this.image = Main.skins[4].image
     this.image.classList.add('coin')
 
     this.image.addEventListener('touchstart', () => { this.clickDown() })
@@ -33,7 +32,8 @@ Coin.prototype.clickUp = function () {
         velocity: {
             y: randomsize / 60
         },
-        size: randomsize
+        size: randomsize,
+        img: Main.coin.image
     });
     
     Main.drops.push(drop)

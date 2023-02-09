@@ -1,9 +1,10 @@
-var Stats = function (){
+var Stats = function () {
     this.score = 0;
     this.streakArray = [];
     this.cryptoBonus = 5;
     this.streakTime = 0
     this.streakMulti = 1;
+    this.coinPerClick = 1
     this.scoreElement = document.querySelector('.score')
     this.streakElement = document.querySelector('.streak-multi')
 }
@@ -28,55 +29,53 @@ var Stats = function (){
         .catch(err => console.error(err));
 } */
 
-Stats.prototype.setScore = function(){
+Stats.prototype.setScore = function () {
     this.checkStreak()
     var clickScore = 1
-    
+
     clickScore = clickScore * this.streakMulti
-    clickScore = (clickScore * (this.cryptoBonus /100 + 1)); 
+    clickScore = (clickScore * (this.cryptoBonus / 100 + 1));
     this.score += clickScore
-    console.log(this.score)
+
     this.scoreElement.innerHTML = Math.trunc(this.score)
 }
 
-Stats.prototype.checkStreak = function(){
-    
+Stats.prototype.checkStreak = function () {
+
     const time = Date.now();
     this.streakArray.push(time);
-    if (this.streakArray.length >= 2){
-        console.log(this.streakArray)
+    if (this.streakArray.length >= 2) {
         const oldTime = this.streakArray[0]
         const newTime = this.streakArray[1]
         const difference = newTime - oldTime
-        if (difference < 800){
+        if (difference < 800) {
             this.streakTime += difference
-            console.log(this.streakTime)
+
         }
         else {
             this.streakTime = 0
-            console.log(this.streakTime)
+
         }
         this.streakArray.splice(0, 1)
         this.setStreak()
     }
 }
 
-Stats.prototype.setStreak = function(){
-    if(this.streakTime < 5000){
+Stats.prototype.setStreak = function () {
+    if (this.streakTime < 5000) {
         this.streakMulti = 1
     }
-    else if (this.streakTime < 10000){
+    else if (this.streakTime < 10000) {
         this.streakMulti = 2
     }
-    else if (this.streakTime < 20000){
+    else if (this.streakTime < 20000) {
         this.streakMulti = 3
     }
-    else if (this.streakTime < 35000){
+    else if (this.streakTime < 35000) {
         this.streakMulti = 4
     }
     else {
         this.streakMulti = 5
     }
-    console.log(this.streakMulti)
-    this.streakElement.innerHTML = `${this.streakMulti}x`
+    this.streakElement.innerHTML = `X${this.streakMulti}`
 }
