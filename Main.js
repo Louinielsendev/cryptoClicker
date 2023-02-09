@@ -25,7 +25,7 @@ Main = {
         Main.drops.forEach((drop, i) => {
             drop.update();
             
-            if (drop.position.y > Canvas.element.height + 250){
+            if (drop.position.y > Canvas.element.height + 350){
                         Main.drops.splice(i, 1)  
             }
            

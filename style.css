@@ -31,9 +31,9 @@
 .menu {
     bottom: 0;
     position: absolute;
-    background-color: black;
+    
     width: 100%;
-    height: 120px;
+    height: 90px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
@@ -47,11 +47,13 @@
     position: absolute;
     background-color: black;
     width: 100%;
-    height: 80px;
+    height: 70px;
     color: white;
     letter-spacing: 3px;
     
 }
+
+
 
 .score{
     font-size: 2em;
@@ -61,7 +63,7 @@
 .bonuses {
     width: 100%;
     position: absolute;
-    top: 80px;
+    top: 70px;
     display: flex;
     justify-content: space-between;
     letter-spacing: 1px;
@@ -76,4 +78,8 @@
 .crypto-bonus {
     color: #05cf05;
     
+}
+
+.streak h3 {
+    font-size: 3em;
 }
