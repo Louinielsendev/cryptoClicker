@@ -27,6 +27,7 @@ Shop.prototype.createSkinElem = function(){
 
         var skinImgWrapper = document.createElement('div');
         var skinImg = document.createElement('img');
+        skinImgWrapper.classList.add('skin--img')
         skinImg = skin.image;
 
         var skinInfo = document.createElement('div')
@@ -35,15 +36,34 @@ Shop.prototype.createSkinElem = function(){
         skinInfo.classList.add('skin--title')
 
         var skinButtons = document.createElement('div')
-        var skinEquipBtn = document.createElement('button')
-        var skinBuyBtn = document.createElement('button')
         skinButtons.classList.add('skin--buttons')
-        skinEquipBtn.innerHTML = 'Equip';
-        skinBuyBtn.innerHTML = 'Buy';
-        skinButtons.appendChild(skinEquipBtn)
-        skinButtons.appendChild(skinBuyBtn)
-        skinEquipBtn.addEventListener('click', this.changeSkin);
-        skinEquipBtn.dataset.id = index
+        if (skin.owned && skin.active){
+            var skinEquipBtn = document.createElement('button')
+            skinEquipBtn.innerHTML = 'Equip';
+            skinEquipBtn.addEventListener('click', this.changeSkin);
+            skinEquipBtn.dataset.id = index
+            skinButtons.appendChild(skinEquipBtn)
+        }   
+        else if (skin.owned){
+            var skinEquipBtn = document.createElement('button')
+            skinEquipBtn.innerHTML = 'Equip';
+            skinEquipBtn.addEventListener('click', this.changeSkin);
+            skinEquipBtn.dataset.id = index
+            skinEquipBtn.classList.add('skin--equipButton')
+            skinButtons.appendChild(skinEquipBtn)
+            
+        }
+        else {
+            var skinBuyBtn = document.createElement('button')
+            skinBuyBtn.innerHTML = 'Buy';
+            skinBuyBtn.addEventListener('click', this.buySkin);
+            skinBuyBtn.classList.add('skin--buyButton')
+            skinBuyBtn.dataset.id = index
+            skinButtons.appendChild(skinBuyBtn)
+            
+        }
+       
+        
 
         skinPrice.innerHTML = skin.price
         skinTitle.innerHTML = skin.name;
@@ -61,4 +81,17 @@ Shop.prototype.createSkinElem = function(){
 Shop.prototype.changeSkin = function(){
     var index = this.dataset.id
     Main.coin.image.src = Main.skins[index].image.src
+    this.classList.remove('skin--equipButton')
+}
+
+Shop.prototype.buySkin = function(){
+    var index = this.dataset.id
+    Main.skins[index].owned = true;
+    this.classList.remove('skin--buyButton')
+    this.classList.add('skin--equipButton')
+    this.innerHTML = 'Equip'
+    this.removeEventListener('click', Main.shop.buySkin)
+    this.addEventListener('click', Main.shop.changeSkin)
+    console.log(Main.skins[index])
+
 }

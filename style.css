@@ -50,6 +50,7 @@
     padding: 10px 15px;
     margin-left: auto;
     margin-right: auto;
+    height: 60px;
     width: 80%;
     margin-bottom: 10px;
     border-radius: 20px;
@@ -58,15 +59,22 @@
     
 }
 
+.skin--img{
+    display: flex;
+    align-items: center;
+}
+
 .skin--title {
     padding-left: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
 }
 
+
+
 .skin-wrapper img{
-    width: 70px;
+    width: 50px;
     
 }
 
@@ -84,12 +92,20 @@
 }
 
 .skin--buttons button {
-    background-color: rgb(20, 135, 243);
+   
     color: white;
     border: none;
     border-radius: 5px;
     width: 70px;
-    height: 30px;
+    height: 50px;
+}
+
+.skin--equipButton{
+    background-color: rgb(24, 90, 212) ;
+}
+
+.skin--buyButton {
+    background-color: #05cf05;
 }
 
 .coin {
@@ -106,7 +122,7 @@
     bottom: 20PX;
     position: absolute;
     background-color: white;
-    width: 80%;
+    width: 60%;
     height: 90px;
     border-radius: 15px;
     z-index: 5;

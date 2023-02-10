@@ -3,12 +3,13 @@ Main = {
     drops: [],
     skins: [],
     coin: '',
+    shop: '',
     init: function () {
         var stats = new Stats();
-        var shop = new Shop();
+        Main.shop = new Shop();
         //stats.getCryptoData()
         Main.generateSkins();
-        shop.createSkinElem();
+        Main.shop.createSkinElem();
         Main.coin = new Coin(stats);
         console.log('init')
         const wrapper = document.querySelector('.wrapper')
