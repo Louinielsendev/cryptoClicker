@@ -2,7 +2,9 @@ var Coin = function (stats) {
     this.stats = stats
     
     console.log(Main.skins)
-    this.image = Main.skins[4].image
+    const image = new Image()
+    image.src = Main.skins[0].image.src
+    this.image = image
     this.image.classList.add('coin')
 
     this.image.addEventListener('touchstart', () => { this.clickDown() })

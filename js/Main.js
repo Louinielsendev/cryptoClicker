@@ -8,6 +8,7 @@ Main = {
         var shop = new Shop();
         //stats.getCryptoData()
         Main.generateSkins();
+        shop.createSkinElem();
         Main.coin = new Coin(stats);
         console.log('init')
         const wrapper = document.querySelector('.wrapper')
@@ -23,14 +24,15 @@ Main = {
     },
     
     generateSkins: function () {
-        var bitcoin = new Skin('img/bitcoin.png', 0, true, true);
-        var cardano = new Skin('img/cardano.png', 5000, false, false)
-        var cronos = new Skin('img/cronos.png', 20000, false, false)
-        var etherum = new Skin('img/Etherum.png', 1000, false, false)
-        var dragonchain = new Skin('img/dragonchain.png', 50000, false, false)
-        var dogecoin = new Skin('img/dogecoin.png', 100000, false, false)
-        var pancakeswap = new Skin('img/pancakeswap.png', 500000, false, false)
-        Main.skins.push(bitcoin, cardano, cronos, etherum, dragonchain, dogecoin, pancakeswap);
+        var Bitcoin = new Skin('Bitcoin','img/bitcoin.png', 0, true, true);
+        var Etherum = new Skin('Etherum','img/Etherum.png', 1000, false, false)
+        var Cardano = new Skin('Cardano','img/cardano.png', 5000, false, false)
+        var Cronos = new Skin('Cronos','img/cronos.png', 20000, false, false)
+        
+        var Dragonchain = new Skin('Dragonchain','img/dragonchain.png', 50000, false, false)
+        var Dogecoin = new Skin('Dogecoin','img/dogecoin.png', 100000, false, false)
+        var Pancakeswap = new Skin('Pancakeswap','img/pancakeswap.png', 500000, false, false)
+        Main.skins.push(Bitcoin, Etherum, Cardano, Cronos, Dragonchain, Dogecoin, Pancakeswap);
     },
 
     animate: function () {
