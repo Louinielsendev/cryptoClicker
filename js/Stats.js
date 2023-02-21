@@ -5,6 +5,7 @@ var Stats = function () {
     this.streakTime = 0
     this.streakMulti = 1;
     this.coinPerClick = 1
+    this.autoClick = 0;
     this.scoreElement = document.querySelector('.score')
     this.streakElement = document.querySelector('.streak-multi')
 }
@@ -29,20 +30,32 @@ var Stats = function () {
         .catch(err => console.error(err));
 } */
 
-Stats.prototype.setScore = function () {
-    this.checkStreak()
-    var clickScore = 1
+Stats.prototype.setAutoScore = function() {
+    var self = this
+    setInterval(function(){
+        self.score += self.autoClick
+        self.setScore()
+    }, 1000)
+}
 
+Stats.prototype.setClickScore = function () {
+    this.checkStreak()
+    var clickScore = 0
+    clickScore = clickScore + this.coinPerClick
     clickScore = clickScore * this.streakMulti
     clickScore = (clickScore * (this.cryptoBonus / 100 + 1));
     this.score += clickScore
+    this.setScore()
+}
 
+Stats.prototype.setScore = function(){
     this.scoreElement.innerHTML = Math.trunc(this.score)
 }
 
 Stats.prototype.checkStreak = function () {
 
-    const time = Date.now();
+    const time = Time.current
+    console.log(Time.current)
     this.streakArray.push(time);
     if (this.streakArray.length >= 2) {
         const oldTime = this.streakArray[0]

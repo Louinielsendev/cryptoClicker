@@ -16,16 +16,14 @@ Coin.prototype.clickDown = function () {
     this.image.style.transform = 'scale(.95)'
 
 
-
 }
 
 Coin.prototype.clickUp = function () {
-    
-   this.stats.setScore()
-    
+    console.log(this.stats.score)
+   this.stats.setClickScore()
     this.image.style.transform = 'scale(1)'
     const randomsize = Math.random() * 25 + 60
-    const randomnumber = Math.random() * 400
+    const randomnumber = Math.random() * 420 - 40
     var drop = new Drop({
         position: {
             x: randomnumber,

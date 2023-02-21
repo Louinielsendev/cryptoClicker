@@ -2,7 +2,14 @@ var Shop = function () {
     this.shopElem = document.querySelector('.modal')
     this.toggleElem = document.querySelector('.menu-button')
     this.skinParentElem = document.querySelector('.modal--skins')
+    this.powerUpsElem = document.querySelector('.modal--powerUps')
     this.open = false
+    this.cpcPrice = 500;
+    this.cpcLevel = 1
+    this.acPrice = 500;
+    this.acLevel = 1
+
+
     this.toggleElem.addEventListener('click', this.toggleShop.bind(this))
 }
 
@@ -18,6 +25,73 @@ Shop.prototype.toggleShop = function () {
         this.shopElem.style.dispaly = 'none'
     }
 }
+
+
+Shop.prototype.createPowerUpsElem = function(){
+
+    var powerUpsWrapper = document.createElement('div')
+    powerUpsWrapper.classList.add('modal--powerUpsWrapper')
+
+    var acElement = document.createElement('div')
+    acElement.classList.add('powerUps--ac')
+    acElement.addEventListener('click', this.addAutoClick.bind(this))
+    var acPriceElement = document.createElement('h1')
+    acPriceElement.innerHTML = this.acPrice
+    acElement.appendChild(acPriceElement)
+    var acLevelElement = document.createElement('h2')
+    acLevelElement.innerHTML = `Level: ${this.acLevel}`
+    acElement.appendChild(acLevelElement)
+
+    var cpcElement = document.createElement('div')
+    cpcElement.classList.add('powerUps--cpc')
+    cpcElement.addEventListener('click', this.addCoinsPerClick.bind(this))
+    var cpcPriceElement = document.createElement('h1')
+    cpcPriceElement.innerHTML = this.cpcPrice;
+    cpcElement.appendChild(cpcPriceElement)
+    var cpcLevelElement = document.createElement('h2')
+    cpcLevelElement.innerHTML = `Level: ${this.cpcLevel}`
+    cpcElement.appendChild(cpcLevelElement)
+
+    
+    powerUpsWrapper.appendChild(acElement)
+    powerUpsWrapper.appendChild(cpcElement)
+    this.powerUpsElem.appendChild(powerUpsWrapper)
+    
+}
+
+Shop.prototype.addAutoClick = function(){
+    if (Main.stats.score >= this.acPrice){
+        Main.stats.score = Main.stats.score - this.acPrice;
+        Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
+        this.acLevel ++
+        var ac = 1 * 1.55**(this.acLevel - 1)
+        this.acPrice = 500 * 2**(this.acLevel - 1)
+        Main.stats.autoClick = ac
+        this.createPowerUpsElem()
+
+    }
+    else {
+        console.log('du har inte råd')
+    }
+        
+    
+}
+
+Shop.prototype.addCoinsPerClick = function(){
+    if (Main.stats.score >= this.cpcPrice){
+        Main.stats.score = Main.stats.score - this.cpcPrice;
+        Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
+        this.cpcLevel ++
+        var cpc = 1 * 2**(this.cpcLevel - 1)
+        this.cpcPrice = 500 * 6**(this.cpcLevel - 1)
+        Main.stats.coinPerClick = cpc;
+        this.createPowerUpsElem()
+    }
+    else {
+        console.log('du har inte råd')
+    }
+}
+
 
 Shop.prototype.createSkinElem = function () {
     Main.skins.forEach((skin, index) => {

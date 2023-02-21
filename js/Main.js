@@ -7,9 +7,11 @@ Main = {
     stats: '',
     init: function () {
         Main.stats = new Stats();
+        Main.stats.setAutoScore()
         Main.shop = new Shop();
         //stats.getCryptoData()
         Main.generateSkins();
+        Main.shop.createPowerUpsElem();
         Main.shop.createSkinElem();
         Main.coin = new Coin(Main.stats);
         console.log('init')
@@ -20,6 +22,7 @@ Main = {
         Canvas.element.height = wrapper.offsetHeight
         Canvas.element.width = wrapper.offsetWidth
         Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height);
+        Time.getTime
         
         Main.animate()
        
