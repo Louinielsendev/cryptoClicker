@@ -8,8 +8,6 @@ var Shop = function () {
     this.cpcLevel = 1
     this.acPrice = 500;
     this.acLevel = 1
-
-
     this.toggleElem.addEventListener('click', this.toggleShop.bind(this))
 }
 

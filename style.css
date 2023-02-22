@@ -8,7 +8,25 @@
 }
 
 .body{
+    
     touch-action: none;
+}
+
+.login--wrapper {
+    height: 100vh;
+    background-color: grey;
+    padding: 20px;
+}
+
+.login--form {
+    margin-top: 20vh;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
 }
 
 .wrapper {
@@ -138,7 +156,7 @@
 }
 
 .coin {
-    width: 25vh;
+    width: 27vh;
     transition: 50ms;
     position: absolute;
     top: 32vh;
