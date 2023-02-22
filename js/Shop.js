@@ -5,9 +5,7 @@ var Shop = function () {
     this.powerUpsElem = document.querySelector('.modal--powerUps')
     this.open = false
     this.cpcPrice = 500;
-    this.cpcLevel = 1
     this.acPrice = 500;
-    this.acLevel = 1
     this.toggleElem.addEventListener('click', this.toggleShop.bind(this))
 }
 
@@ -26,7 +24,7 @@ Shop.prototype.toggleShop = function () {
 
 
 Shop.prototype.createPowerUpsElem = function(){
-
+    console.log(Main.stats.acLevel)
     var powerUpsWrapper = document.createElement('div')
     powerUpsWrapper.classList.add('modal--powerUpsWrapper')
 
@@ -37,7 +35,7 @@ Shop.prototype.createPowerUpsElem = function(){
     acPriceElement.innerHTML = this.acPrice
     acElement.appendChild(acPriceElement)
     var acLevelElement = document.createElement('h2')
-    acLevelElement.innerHTML = `Level: ${this.acLevel}`
+    acLevelElement.innerHTML = `Level: ${Main.stats.acLevel}`
     acElement.appendChild(acLevelElement)
 
     var cpcElement = document.createElement('div')
@@ -47,7 +45,8 @@ Shop.prototype.createPowerUpsElem = function(){
     cpcPriceElement.innerHTML = this.cpcPrice;
     cpcElement.appendChild(cpcPriceElement)
     var cpcLevelElement = document.createElement('h2')
-    cpcLevelElement.innerHTML = `Level: ${this.cpcLevel}`
+    console.log(Main.stats.cpcLevel)
+    cpcLevelElement.innerHTML = `Level: ${Main.stats.cpcLevel}`
     cpcElement.appendChild(cpcLevelElement)
 
     
@@ -61,15 +60,14 @@ Shop.prototype.addAutoClick = function(){
     if (Main.stats.score >= this.acPrice){
         Main.stats.score = Main.stats.score - this.acPrice;
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
-        this.acLevel ++
-        var ac = 1 * 1.55**(this.acLevel - 1)
-        this.acPrice = 500 * 2**(this.acLevel - 1)
-        Main.stats.autoClick = ac
+        Main.stats.acLevel += 1
+        
+        this.acPrice = 500 * 2**(Main.stats.acLevel - 1)
         this.createPowerUpsElem()
-
     }
     else {
         console.log('du har inte råd')
+        console.log(Main.stats.acLevel)
     }
         
     
@@ -79,10 +77,8 @@ Shop.prototype.addCoinsPerClick = function(){
     if (Main.stats.score >= this.cpcPrice){
         Main.stats.score = Main.stats.score - this.cpcPrice;
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
-        this.cpcLevel ++
-        var cpc = 1 * 2**(this.cpcLevel - 1)
-        this.cpcPrice = 500 * 6**(this.cpcLevel - 1)
-        Main.stats.coinPerClick = cpc;
+        Main.stats.cpcLevel += 1
+        this.cpcPrice = 500 * 6**(Main.stats.cpcLevel - 1)
         this.createPowerUpsElem()
     }
     else {
