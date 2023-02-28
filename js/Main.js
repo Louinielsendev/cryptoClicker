@@ -7,13 +7,16 @@ Main = {
     stats: '',
     init: function () {
         Main.stats = new Stats();
-        Main.stats.setAutoScore()
         Main.shop = new Shop();
-        //stats.getCryptoData()
+        Main.stats.setAutoScore()
+        Main.getUser()
+        //Main.stats.getCryptoData()
         Main.generateSkins();
-        Main.shop.createPowerUpsElem();
-        Main.shop.createSkinElem();
-        Main.coin = new Coin(Main.stats);
+
+        
+
+        Main.coin = new Coin(Main.stats)
+        
         console.log('init')
         const wrapper = document.querySelector('.wrapper')
         wrapper.appendChild(Main.coin.image)
@@ -23,20 +26,46 @@ Main = {
         Canvas.element.width = wrapper.offsetWidth
         Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height);
         Time.getTime
-
-        if (localStorage.getItem('userId') === null) {
-            var id = Main.generateId()
-            localStorage.setItem('userId', id)
-            
-        }
-        console.log(localStorage.getItem('userId'))
         Main.animate()
     },
 
-    generateId: function () {
+    getUser: function () {
+        if (localStorage.getItem('userId') === null) {
+            var id = Main.generateId()
 
+            localStorage.setItem('userId', id)
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log('succé')
+                }
+            };
+            xmlhttp.open("GET", "newuser.php?q=" + id, true);
+            xmlhttp.send();
+        }
+
+        else {
+            var userId = localStorage.getItem('userId')
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.open("GET", "getUser.php?q=" + userId, true);
+            xmlhttp.send();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText)
+                    Main.stats.score = Number(data[0].score)
+                    Main.stats.cpcLevel = Number(data[0].clickPerCoin)
+                    Main.stats.acLevel = Number(data[0].clickPerSecond)
+                    Main.shop.createPowerUpsElem();
+                }
+            };
+        }
+    },
+
+    generateId: function () {
+        console.log('hi')
         const characters = '0123456789';
-        var result = ' ';
+        var result = '';
         const charactersLength = characters.length;
         for (let i = 0; i < 10; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -45,23 +74,48 @@ Main = {
     },
 
     generateSkins: function () {
-        var Bitcoin = new Skin('Bitcoin', 'img/bitcoin.png', 0, true, true);
-        var Etherum = new Skin('Etherum', 'img/Etherum.png', 3, false, false)
-        var Cardano = new Skin('Cardano', 'img/cardano.png', 5, false, false)
-        var Cronos = new Skin('Cronos', 'img/cronos.png', 20, false, false)
+        var Bitcoin = new Skin('Bitcoin', 0, false, false);
+        var Etherum = new Skin('Etherum', 3, false, false)
+        var Cardano = new Skin('Cardano', 5, false, false)
+        var Cronos = new Skin('Cronos', 20, false, false)
 
-        var Dragonchain = new Skin('Dragonchain', 'img/dragonchain.png', 50, false, false)
-        var Dogecoin = new Skin('Dogecoin', 'img/dogecoin.png', 100, false, false)
-        var Pancakeswap = new Skin('Pancakeswap', 'img/pancakeswap.png', 500, false, false)
-        Main.skins.push(Bitcoin, Etherum, Cardano, Cronos, Dragonchain, Dogecoin, Pancakeswap);
+        var Dragonchain = new Skin('Dragonchain', 50, false, false)
+        var Dogecoin = new Skin('Dogecoin', 100, false, false)
+        var Pancakeswap = new Skin('Pancakeswap', 500, false, false)
+        Main.skins.push(Bitcoin, Etherum, Cardano, Cronos, Dragonchain, Dogecoin, Pancakeswap)
+
+
+        var userId = localStorage.getItem('userId')
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", "getUserSkins.php?q=" + userId, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText)
+                console.log(data)
+                data.forEach(skin => {
+                    var index = skin.skinId - 1
+                    Main.skins[index].owned = true
+                    if (skin.equiped == 1) {
+                        Main.skins[index].active = true
+                    }
+
+                });
+                Main.shop.createSkinElem()
+                Main.coin.getImageUrl()
+            }
+
+        };
     },
-
 
     animate: function () {
         var animation = window.requestAnimationFrame(Main.animate)
 
-        Canvas.c.fillStyle = '#EFEFEE';
+
         Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height)
+        var background = new Background();
+        background.draw();
         Main.drops.forEach((drop, i) => {
             drop.update();
 

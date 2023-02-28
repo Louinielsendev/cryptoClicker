@@ -1,12 +1,19 @@
 var Coin = function (stats) {
     this.stats = stats
     
-    console.log(Main.skins)
+    console.log(Main.skins[0])
     const image = new Image()
-    image.src = Main.skins[0].image.src
+    
     this.image = image
     this.image.classList.add('coin')
+    this.getImageUrl = function(){
+        Main.skins.forEach(skin => {
+            if (skin.active === true){
+                image.src = skin.image.src
+            }
 
+        });
+    }
     this.image.addEventListener('touchstart', () => { this.clickDown() })
     this.image.addEventListener('touchend', () => { this.clickUp() })
     this.image.classList.add('coin-img')
@@ -14,12 +21,13 @@ var Coin = function (stats) {
 
 Coin.prototype.clickDown = function () {
     this.image.style.transform = 'scale(.95)'
-
-
 }
 
+
+
 Coin.prototype.clickUp = function () {
-    console.log(this.stats.score)
+    console.log(Main.stats.acLevel)
+   this.stats.saveStats()
    this.stats.setClickScore()
     this.image.style.transform = 'scale(1)'
     const randomsize = Math.random() * 25 + 60

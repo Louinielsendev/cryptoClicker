@@ -1,11 +1,11 @@
 var Shop = function () {
     this.shopElem = document.querySelector('.modal')
     this.toggleElem = document.querySelector('.menu-button')
-    this.skinParentElem = document.querySelector('.modal--skins')
+    this.skinParentElem = document.querySelector('.modal--skinsWrapper')
     this.powerUpsElem = document.querySelector('.modal--powerUps')
     this.open = false
-    this.cpcPrice = 500;
-    this.acPrice = 500;
+    this.cpcPrice = 500
+    this.acPrice = 500
     this.toggleElem.addEventListener('click', this.toggleShop.bind(this))
 }
 
@@ -23,62 +23,51 @@ Shop.prototype.toggleShop = function () {
 }
 
 
-Shop.prototype.createPowerUpsElem = function(){
-    console.log(Main.stats.acLevel)
-    var powerUpsWrapper = document.createElement('div')
-    powerUpsWrapper.classList.add('modal--powerUpsWrapper')
+Shop.prototype.createPowerUpsElem = function () {
 
-    var acElement = document.createElement('div')
-    acElement.classList.add('powerUps--ac')
+    var acElement = document.querySelector('.powerUps--ac')
+    var cpcElement = document.querySelector('.powerUps--cpc')
+    var priceElements = document.querySelectorAll('.powerUps--price')
+    var levelElements = document.querySelectorAll('.powerUps--level')
     acElement.addEventListener('click', this.addAutoClick.bind(this))
-    var acPriceElement = document.createElement('h1')
-    acPriceElement.innerHTML = this.acPrice
-    acElement.appendChild(acPriceElement)
-    var acLevelElement = document.createElement('h2')
-    acLevelElement.innerHTML = `Level: ${Main.stats.acLevel}`
-    acElement.appendChild(acLevelElement)
+    this.acPrice = 500 * 2 ** (Main.stats.acLevel - 1)
+    priceElements[0].innerHTML = this.acPrice
+    levelElements[0].innerHTML = `Level: ${Main.stats.acLevel}`
+    console.log(Main.stats.acLevel)
 
-    var cpcElement = document.createElement('div')
-    cpcElement.classList.add('powerUps--cpc')
+
+
+    console.log(acElement, cpcElement)
     cpcElement.addEventListener('click', this.addCoinsPerClick.bind(this))
-    var cpcPriceElement = document.createElement('h1')
-    cpcPriceElement.innerHTML = this.cpcPrice;
-    cpcElement.appendChild(cpcPriceElement)
-    var cpcLevelElement = document.createElement('h2')
-    console.log(Main.stats.cpcLevel)
-    cpcLevelElement.innerHTML = `Level: ${Main.stats.cpcLevel}`
-    cpcElement.appendChild(cpcLevelElement)
+    this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
+    priceElements[1].innerHTML = this.cpcPrice
+    levelElements[1].innerHTML = `Level: ${Main.stats.cpcLevel}`
 
-    
-    powerUpsWrapper.appendChild(acElement)
-    powerUpsWrapper.appendChild(cpcElement)
-    this.powerUpsElem.appendChild(powerUpsWrapper)
-    
 }
 
-Shop.prototype.addAutoClick = function(){
-    if (Main.stats.score >= this.acPrice){
+Shop.prototype.addAutoClick = function () {
+    if (Main.stats.score >= this.acPrice) {
         Main.stats.score = Main.stats.score - this.acPrice;
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
         Main.stats.acLevel += 1
-        
-        this.acPrice = 500 * 2**(Main.stats.acLevel - 1)
+
+        this.acPrice = 500 * 2 ** (Main.stats.acLevel - 1)
         this.createPowerUpsElem()
     }
     else {
         console.log('du har inte råd')
         console.log(Main.stats.acLevel)
     }
-        
-    
+
+
 }
 
-Shop.prototype.addCoinsPerClick = function(){
-    if (Main.stats.score >= this.cpcPrice){
+Shop.prototype.addCoinsPerClick = function () {
+    if (Main.stats.score >= this.cpcPrice) {
         Main.stats.score = Main.stats.score - this.cpcPrice;
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
         Main.stats.cpcLevel += 1
-        this.cpcPrice = 500 * 6**(Main.stats.cpcLevel - 1)
+        this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
         this.createPowerUpsElem()
     }
     else {
@@ -152,12 +141,29 @@ Shop.prototype.changeSkin = function (e) {
     var buttonIndex = button.dataset.id
     Main.skins.forEach((skin, index) => {
         if (skin.owned) {
+            var skinId = (index + 1)
+            var userId = localStorage.getItem('userId')
             if (index == buttonIndex) {
                 skin.active = true
-
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText)
+                    }
+                };
+                xmlhttp.open("GET", `equipSkin.php?userId=${userId}&skinId=${skinId}&state=1`, true);
+                xmlhttp.send();
             }
             else {
                 skin.active = false
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText)
+                    }
+                };
+                xmlhttp.open("GET", `equipSkin.php?userId=${userId}&skinId=${skinId}&state=0`, true);
+                xmlhttp.send();
             }
         }
     });
@@ -168,15 +174,25 @@ Shop.prototype.changeSkin = function (e) {
 }
 
 Shop.prototype.buySkin = function () {
-    var index = this.dataset.id
+    var index = parseInt(this.dataset.id)
+    var skinId = index + 1;
+    var userId = localStorage.getItem('userId')
+
     if (Main.stats.score >= Main.skins[index].price) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+            }
+        };
+        xmlhttp.open("GET", `buySkin.php?userId=${userId}&skinId=${skinId}`, true);
+        xmlhttp.send();
+
+
         Main.skins[index].owned = true;
         Main.stats.score = (Main.stats.score - Main.skins[index].price)
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score)
-        this.classList.remove('skin--buyButton')
-        this.classList.add('skin--equipButton')
-        this.innerHTML = 'Equip'
-        this.removeEventListener('click', Main.shop.buySkin)
-        this.addEventListener('click', Main.shop.changeSkin)
+        Main.shop.skinParentElem.innerHTML = ''
+        Main.shop.createSkinElem()
     }
 }

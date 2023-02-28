@@ -4,7 +4,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Luckiest Guy', cursive;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .body{
@@ -12,30 +12,17 @@
     touch-action: none;
 }
 
-.login--wrapper {
-    height: 100vh;
-    background-color: grey;
-    padding: 20px;
-}
 
-.login--form {
-    margin-top: 20vh;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    justify-content: center;
-}
 
 .wrapper {
+    background-image: url(img/background.jpg);
     width: 100vw;
     max-width: 500px;
     height: 100vh;
     display: flex;
     justify-content: center;
     position: relative;
+    z-index: 66 ;
 }
 
 .modal{
@@ -68,20 +55,27 @@
 
 .modal--powerUpsWrapper div{
     width: 100%;
-    height: 120px;
+    
     border-radius: 20px;
     text-align: center;
     background-color: white;
 }
 
-.powerUps--cpc {
-    
+.modal--powerUpsTitle{
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.powerUps--cpc, .powerUps--ac  {
+    padding: 10px;
+    font-size: .6em;
    
 }
 
-.powerUps--ac {
-    
-    
+
+
+.powerUps--img{
+    height: 50px;
 }
 
 .modal--skins{
@@ -190,7 +184,7 @@
     
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     top: 0;
     position: absolute;
     background-color: black;
@@ -198,13 +192,14 @@
     height: 70px;
     color: white;
     letter-spacing: 3px;
+    padding: 5px;
     
 }
 
 
 
 .score{
-    font-size: 2em;
+    font-size: 1.4em;
     
 }
 
@@ -217,11 +212,13 @@
     letter-spacing: 1px;
 }
 
-.bonuses div {
+.perc {
     text-align: center;
     padding: 10px;
-    font-size: 1em;
+    font-size: .6em;
 }
+
+
 
 .crypto-bonus {
     color: #05cf05;

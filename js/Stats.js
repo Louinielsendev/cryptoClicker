@@ -11,7 +11,7 @@ var Stats = function () {
 }
 
 
-/*Stats.prototype.getCryptoData = function(){
+Stats.prototype.getCryptoData = function(){
     
     const options = {
         method: 'GET',
@@ -25,16 +25,16 @@ var Stats = function () {
             return response.json()})
         .then(data => {
             this.cryptoBonus = data.changes.percent.day
+            console.log(this.cryptoBonus)
             document.querySelector('.crypto-bonus').innerHTML = `${this.cryptoBonus}%`
         })
         .catch(err => console.error(err));
-} */
+}
 
 Stats.prototype.setAutoScore = function() {
     var self = this
     setInterval(function(){
         var ac = 1 * 1.55**(self.acLevel - 1)
-        console.log(ac)
         self.score += ac
         self.setScore()
     }, 1000)
@@ -45,7 +45,6 @@ Stats.prototype.setClickScore = function () {
     this.checkStreak()
     var clickScore = 0
     var cpc = 1 * 2**(this.cpcLevel - 1)
-    console.log(cpc)
     clickScore = clickScore + cpc
     clickScore = clickScore * this.streakMulti
     clickScore = (clickScore * (this.cryptoBonus / 100 + 1));
@@ -60,7 +59,7 @@ Stats.prototype.setScore = function(){
 Stats.prototype.checkStreak = function () {
 
     const time = Time.current
-    console.log(Time.current)
+
     this.streakArray.push(time);
     if (this.streakArray.length >= 2) {
         const oldTime = this.streakArray[0]
@@ -96,4 +95,17 @@ Stats.prototype.setStreak = function () {
         this.streakMulti = 5
     }
     this.streakElement.innerHTML = `X${this.streakMulti}`
+}
+
+Stats.prototype.saveStats = function(){
+    var userId = localStorage.getItem('userId') 
+    var xmlhttp = new XMLHttpRequest();   
+    xmlhttp.open("GET", `saveStats.php?id=${userId}&score=${this.score}&cpcLevel=${this.cpcLevel}&acLevel=${this.acLevel}`, true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+
+        }
+    };
 }
