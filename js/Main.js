@@ -16,8 +16,7 @@ Main = {
         
 
         Main.coin = new Coin(Main.stats)
-        
-        console.log('init')
+        console.log(localStorage.getItem('userId'))
         const wrapper = document.querySelector('.wrapper')
         wrapper.appendChild(Main.coin.image)
         Canvas.element = document.querySelector('canvas');
@@ -64,7 +63,7 @@ Main = {
 
     generateId: function () {
         console.log('hi')
-        const characters = '0123456789';
+        const characters = '123456789';
         var result = '';
         const charactersLength = characters.length;
         for (let i = 0; i < 10; i++) {

@@ -35,13 +35,11 @@ Shop.prototype.createPowerUpsElem = function () {
     levelElements[0].innerHTML = `Level: ${Main.stats.acLevel}`
     console.log(Main.stats.acLevel)
 
-
-
-    console.log(acElement, cpcElement)
     cpcElement.addEventListener('click', this.addCoinsPerClick.bind(this))
     this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
     priceElements[1].innerHTML = this.cpcPrice
     levelElements[1].innerHTML = `Level: ${Main.stats.cpcLevel}`
+    Main.stats.saveStats()
 
 }
 
@@ -58,7 +56,7 @@ Shop.prototype.addAutoClick = function () {
         console.log('du har inte råd')
         console.log(Main.stats.acLevel)
     }
-
+    Main.stats.saveStats()
 
 }
 

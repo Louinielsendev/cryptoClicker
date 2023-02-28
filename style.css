@@ -7,8 +7,8 @@
     font-family: 'Space Grotesk', sans-serif;
 }
 
-.body{
-    
+.body {
+
     touch-action: none;
 }
 
@@ -22,10 +22,10 @@
     display: flex;
     justify-content: center;
     position: relative;
-    z-index: 66 ;
+    z-index: 66;
 }
 
-.modal{
+.modal {
     position: absolute;
     display: none;
     bottom: 0;
@@ -38,47 +38,48 @@
     overflow: hidden;
 }
 
-.modal--content{
+.modal--content {
     width: 100%;
     overflow-y: scroll;
 }
 
 .modal--powerUps {
     padding: 20px;
-    
+
 }
 
-.modal--powerUpsWrapper{
+.modal--powerUpsWrapper {
     display: flex;
     gap: 10px;
 }
 
-.modal--powerUpsWrapper div{
+.modal--powerUpsWrapper div {
     width: 100%;
-    
+
     border-radius: 20px;
     text-align: center;
     background-color: white;
 }
 
-.modal--powerUpsTitle{
+.modal--powerUpsTitle {
     font-size: 1.2em;
     margin-bottom: 10px;
 }
 
-.powerUps--cpc, .powerUps--ac  {
+.powerUps--cpc,
+.powerUps--ac {
     padding: 10px;
     font-size: .6em;
-   
+
 }
 
 
 
-.powerUps--img{
+.powerUps--img {
     height: 50px;
 }
 
-.modal--skins{
+.modal--skins {
     width: 100%;
     margin-top: 10px;
     padding: 0 20px 0 20px;
@@ -87,7 +88,7 @@
 
 
 
-.skin-wrapper{
+.skin-wrapper {
     padding: 10px 15px;
     margin-left: auto;
     margin-right: auto;
@@ -97,10 +98,10 @@
     border-radius: 20px;
     background-color: white;
     display: flex;
-    
+
 }
 
-.skin--img{
+.skin--img {
     display: flex;
     align-items: center;
 }
@@ -114,9 +115,9 @@
 
 
 
-.skin-wrapper img{
+.skin-wrapper img {
     width: 50px;
-    
+
 }
 
 
@@ -124,7 +125,7 @@
     font-size: 20px;
 }
 
-.skin--buttons{
+.skin--buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -133,7 +134,7 @@
 }
 
 .skin--buttons button {
-   
+
     color: white;
     border: none;
     border-radius: 5px;
@@ -141,8 +142,8 @@
     height: 40px;
 }
 
-.skin--equipButton{
-    background-color: rgb(24, 90, 212) ;
+.skin--equipButton {
+    background-color: rgb(24, 90, 212);
 }
 
 .skin--buyButton {
@@ -169,38 +170,36 @@
     z-index: 5;
 }
 
-.menu-button{
+.menu-button {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.menu-button img{
+.menu-button img {
     width: 40px;
 }
 
 .header {
-    
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     top: 0;
     position: absolute;
-    background-color: black;
     width: 100%;
     height: 70px;
     color: white;
     letter-spacing: 3px;
     padding: 5px;
-    
+
 }
 
 
-
-.score{
+.score {
     font-size: 1.4em;
-    
+
 }
 
 .bonuses {
@@ -222,10 +221,9 @@
 
 .crypto-bonus {
     color: #05cf05;
-    
+
 }
 
 .streak h3 {
     font-size: 3em;
 }
-

@@ -1,15 +1,8 @@
 <?php
+require_once 'dbCon.php';
+
 $q = intval($_GET['q']);
 
-$serverName = "localhost";
-$dbUserName = "root";
-$dbPassword = "Anglarna1!";
-$dbName = "click-game";
-
-$con = mysqli_connect($serverName, $dbUserName, $dbPassword, $dbName);
-if (!$con) {
-  die('Could not connect: ' . mysqli_error($con));
-}
 
 
 $sql="Select * from ownskin where userId = $q";

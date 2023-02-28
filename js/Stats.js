@@ -26,7 +26,8 @@ Stats.prototype.getCryptoData = function(){
         .then(data => {
             this.cryptoBonus = data.changes.percent.day
             console.log(this.cryptoBonus)
-            document.querySelector('.crypto-bonus').innerHTML = `${this.cryptoBonus}%`
+            document.querySelector('.crypto-bonus').innerHTML = `${this.cryptoBonus}%`;
+
         })
         .catch(err => console.error(err));
 }
@@ -37,6 +38,7 @@ Stats.prototype.setAutoScore = function() {
         var ac = 1 * 1.55**(self.acLevel - 1)
         self.score += ac
         self.setScore()
+        self.saveStats()
     }, 1000)
 }
 
