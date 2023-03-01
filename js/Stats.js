@@ -1,11 +1,12 @@
 var Stats = function () {
     this.score = 0;
     this.streakArray = [];
-    this.cryptoBonus = 5;
+    this.cryptoProcent = 5;
+    this.cryptoBonus = 1
     this.streakTime = 0
     this.streakMulti = 1;
     this.cpcLevel = 1
-    this.acLevel = 0;
+    this.acLevel = 1;
     this.scoreElement = document.querySelector('.score')
     this.streakElement = document.querySelector('.streak-multi')
 }
@@ -24,9 +25,9 @@ Stats.prototype.getCryptoData = function(){
         .then(response => {
             return response.json()})
         .then(data => {
-            this.cryptoBonus = data.changes.percent.day
-            console.log(this.cryptoBonus)
-            document.querySelector('.crypto-bonus').innerHTML = `${this.cryptoBonus}%`;
+            this.cryptoProcent = data.changes.percent.day
+            
+            
 
         })
         .catch(err => console.error(err));
@@ -45,17 +46,18 @@ Stats.prototype.setAutoScore = function() {
 Stats.prototype.setClickScore = function () {
     
     this.checkStreak()
+    
     var clickScore = 0
     var cpc = 1 * 2**(this.cpcLevel - 1)
     clickScore = clickScore + cpc
     clickScore = clickScore * this.streakMulti
-    clickScore = (clickScore * (this.cryptoBonus / 100 + 1));
+    clickScore = (clickScore * this.cryptoBonus);
     this.score += clickScore
     this.setScore()
 }
 
 Stats.prototype.setScore = function(){
-    this.scoreElement.innerHTML = Math.trunc(this.score)
+    this.scoreElement.innerHTML = new Intl.NumberFormat("de-DE").format(Math.trunc(this.score))
 }
 
 Stats.prototype.checkStreak = function () {
@@ -110,4 +112,21 @@ Stats.prototype.saveStats = function(){
 
         }
     };
+}
+
+Stats.prototype.getCryptoBounus = function(){
+    if (this.cryptoProcent > 0 && this.cryptoProcent < 1){
+        this.cryptoBonus = 1.2
+    }
+    else if (this.cryptoProcent > 0 && this.cryptoProcent < 2){
+        this.cryptoBonus = 1.5 
+    }
+    else if (this.cryptoProcent > 2){
+        this.cryptoBonus = 2
+
+    }
+    else {
+        this.cryptoBonus = 1
+    }
+    document.querySelector('.crypto-bonus').innerHTML = `X${this.cryptoBonus}`;
 }

@@ -25,6 +25,13 @@
     z-index: 66;
 }
 
+.scoreAnimation {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    color: white;
+}
+
 .modal {
     position: absolute;
     display: none;
@@ -36,11 +43,26 @@
     z-index: 4;
     transition: 200ms;
     overflow: hidden;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
 }
+
 
 .modal--content {
     width: 100%;
     overflow-y: scroll;
+    position: relative;
+}
+
+.modal--exit{
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    
+}
+
+.modal--exit img {
+    height: 25px;
 }
 
 .modal--powerUps {
@@ -182,7 +204,7 @@
 }
 
 .header {
-
+    
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -193,7 +215,17 @@
     color: white;
     letter-spacing: 3px;
     padding: 5px;
+    
 
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background-color: black;
+    opacity: 50%;
 }
 
 
@@ -217,13 +249,12 @@
     font-size: .6em;
 }
 
-
-
-.crypto-bonus {
-    color: #05cf05;
-
-}
-
 .streak h3 {
     font-size: 3em;
 }
+
+.crypto-bonus {
+    color: #05cf05;
+    font-size: 2em;
+}
+

@@ -16,6 +16,7 @@
     <script src="js/Stats.js"></script>
     <script src="js/Shop.js"></script>
     <script src="js/Skin.js"></script>
+    <script src="js/ScoreAnimation.js"></script>
     <script src="js/Background.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,6 +29,7 @@
     <div class="wrapper">
         <div class="modal">
             <div class="modal--content">
+                <div class="modal--exit"><img src="img/close.png" alt=""></div>
                 <div class="modal--powerUps">
                     <h1 class='modal--powerUpsTitle'>Power Ups</h1>
                     <div class="modal--powerUpsWrapper">
@@ -35,7 +37,7 @@
                         <img class='powerUps--img' src="img/servers.png" alt="">
                         <h1>Server</h1>
                         <h2 class='powerUps--level'>Level:</h2>
-                        <h2>8/sec</h2>
+                        <h2 class='powerUps--bonus'>/sec</h2>
                         <h1 class='powerUps--price'>0</h1>
                         
                     </div>
@@ -43,7 +45,7 @@
                         <img class='powerUps--img' src="img/miner.png" alt="">
                         <h1>Miner</h1>
                         <h2 class='powerUps--level'>Level:</h2>
-                        <h2>8/click</h2>
+                        <h2 class='powerUps--bonus'>/click</h2>
                         <h1 class='powerUps--price'>0</h1>
         
                     </div>
@@ -58,7 +60,9 @@
             </div>
         </div>
         <canvas></canvas>
+         <div class="overlay"></div>
         <div class="header">
+           
             <div class="perc bonus">
                 <h3>CRYPTO <br> BONUS</h3>
                 <h3 class="crypto-bonus">100%</h3>

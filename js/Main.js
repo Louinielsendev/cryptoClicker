@@ -1,22 +1,20 @@
 
 Main = {
     drops: [],
+    scoreAnimations: [],
     skins: [],
     coin: '',
     shop: '',
     stats: '',
     init: function () {
         Main.stats = new Stats();
-        Main.shop = new Shop();
-        Main.stats.setAutoScore()
-        Main.getUser()
-        //Main.stats.getCryptoData()
-        Main.generateSkins();
-
-        
-
         Main.coin = new Coin(Main.stats)
-        console.log(localStorage.getItem('userId'))
+        Main.shop = new Shop();
+        Main.getUser()
+        Main.generateSkins();
+        Main.stats.setAutoScore()
+        Main.stats.getCryptoData()
+        Main.stats.getCryptoBounus();
         const wrapper = document.querySelector('.wrapper')
         wrapper.appendChild(Main.coin.image)
         Canvas.element = document.querySelector('canvas');
@@ -41,9 +39,11 @@ Main = {
             };
             xmlhttp.open("GET", "newuser.php?q=" + id, true);
             xmlhttp.send();
+            Main.shop.createPowerUpsElem();
+            
         }
 
-        else {
+        else if (localStorage.getItem('userId')) {
             var userId = localStorage.getItem('userId')
             var xmlhttp = new XMLHttpRequest();
 
@@ -77,11 +77,12 @@ Main = {
         var Etherum = new Skin('Etherum', 3, false, false)
         var Cardano = new Skin('Cardano', 5, false, false)
         var Cronos = new Skin('Cronos', 20, false, false)
-
-        var Dragonchain = new Skin('Dragonchain', 50, false, false)
         var Dogecoin = new Skin('Dogecoin', 100, false, false)
         var Pancakeswap = new Skin('Pancakeswap', 500, false, false)
-        Main.skins.push(Bitcoin, Etherum, Cardano, Cronos, Dragonchain, Dogecoin, Pancakeswap)
+        var Dragonchain = new Skin('Dragonchain', 1000, false, false)
+        var Tether = new Skin('Tether', 1500, false, false)
+        var YooShi = new Skin('YooShi', 2000, false, false)
+        Main.skins.push(Bitcoin, Etherum, Cardano, Cronos, Dogecoin, Pancakeswap, Dragonchain, Tether, YooShi)
 
 
         var userId = localStorage.getItem('userId')
@@ -93,16 +94,23 @@ Main = {
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText)
                 console.log(data)
-                data.forEach(skin => {
-                    var index = skin.skinId - 1
-                    Main.skins[index].owned = true
-                    if (skin.equiped == 1) {
-                        Main.skins[index].active = true
-                    }
+                if (data.length < 1) {
+                    localStorage.removeItem('userId')
+                    location.reload()
+                }
+                else {
+                    data.forEach(skin => {
+                        var index = skin.skinId - 1
+                        Main.skins[index].owned = true
+                        if (skin.equiped == 1) {
+                            Main.skins[index].active = true
+                        }
 
-                });
-                Main.shop.createSkinElem()
-                Main.coin.getImageUrl()
+                    });
+                    Main.shop.createSkinElem()
+                    Main.coin.getImageUrl()
+                }
+
             }
 
         };
@@ -123,6 +131,12 @@ Main = {
             }
 
         });
+        Main.scoreAnimations.forEach((score, i) =>{
+            score.update()
+            if (score.position.y < 70) {
+                Main.scoreAnimations.splice(i, 1)
+            }
+        })
     }
 }
 

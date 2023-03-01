@@ -1,12 +1,16 @@
 var Shop = function () {
     this.shopElem = document.querySelector('.modal')
-    this.toggleElem = document.querySelector('.menu-button')
+    this.toggleElem = document.querySelector('.shop')
+    this.coinToggleElem = document.querySelector('.clicker')
+    this.closeElem = document.querySelector('.modal--exit')
     this.skinParentElem = document.querySelector('.modal--skinsWrapper')
     this.powerUpsElem = document.querySelector('.modal--powerUps')
     this.open = false
     this.cpcPrice = 500
     this.acPrice = 500
     this.toggleElem.addEventListener('click', this.toggleShop.bind(this))
+    this.coinToggleElem.addEventListener('click', this.closeShop.bind(this))
+    this.closeElem.addEventListener('click', this.closeShop.bind(this))
 }
 
 Shop.prototype.toggleShop = function () {
@@ -22,6 +26,14 @@ Shop.prototype.toggleShop = function () {
     }
 }
 
+Shop.prototype.closeShop = function(){
+    if(this.open){
+        this.open = false
+        this.shopElem.style.height = '0'
+        this.shopElem.style.dispaly = 'none'
+    }
+}
+
 
 Shop.prototype.createPowerUpsElem = function () {
 
@@ -29,16 +41,20 @@ Shop.prototype.createPowerUpsElem = function () {
     var cpcElement = document.querySelector('.powerUps--cpc')
     var priceElements = document.querySelectorAll('.powerUps--price')
     var levelElements = document.querySelectorAll('.powerUps--level')
+    var bonusElements = document.querySelectorAll('.powerUps--bonus')
     acElement.addEventListener('click', this.addAutoClick.bind(this))
     this.acPrice = 500 * 2 ** (Main.stats.acLevel - 1)
-    priceElements[0].innerHTML = this.acPrice
+   
+    priceElements[0].innerHTML = new Intl.NumberFormat("de-DE").format(this.acPrice)
     levelElements[0].innerHTML = `Level: ${Main.stats.acLevel}`
+    bonusElements[0].innerHTML = `${(1 * 1.55**(Main.stats.acLevel - 1)).toFixed(1)}/sec`
     console.log(Main.stats.acLevel)
 
     cpcElement.addEventListener('click', this.addCoinsPerClick.bind(this))
     this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
-    priceElements[1].innerHTML = this.cpcPrice
+    priceElements[1].innerHTML = new Intl.NumberFormat("de-DE").format(this.cpcPrice)
     levelElements[1].innerHTML = `Level: ${Main.stats.cpcLevel}`
+    bonusElements[1].innerHTML = `${1 * 2**(Main.stats.cpcLevel - 1)}/click`
     Main.stats.saveStats()
 
 }
@@ -50,6 +66,7 @@ Shop.prototype.addAutoClick = function () {
         Main.stats.acLevel += 1
 
         this.acPrice = 500 * 2 ** (Main.stats.acLevel - 1)
+
         this.createPowerUpsElem()
     }
     else {
@@ -66,6 +83,7 @@ Shop.prototype.addCoinsPerClick = function () {
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
         Main.stats.cpcLevel += 1
         this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
+       
         this.createPowerUpsElem()
     }
     else {
@@ -97,6 +115,7 @@ Shop.prototype.createSkinElem = function () {
             skinEquipBtn.innerHTML = 'Equiped';
             skinEquipBtn.dataset.id = index
             skinButtons.appendChild(skinEquipBtn)
+            skinPrice.innerHTML = 'Owned'
         }
         else if (skin.owned) {
             var skinEquipBtn = document.createElement('button')
@@ -105,7 +124,7 @@ Shop.prototype.createSkinElem = function () {
             skinEquipBtn.dataset.id = index
             skinEquipBtn.classList.add('skin--equipButton')
             skinButtons.appendChild(skinEquipBtn)
-
+            skinPrice.innerHTML = 'Owned'
         }
         else {
             var skinBuyBtn = document.createElement('button')
@@ -114,12 +133,12 @@ Shop.prototype.createSkinElem = function () {
             skinBuyBtn.classList.add('skin--buyButton')
             skinBuyBtn.dataset.id = index
             skinButtons.appendChild(skinBuyBtn)
-
+            skinPrice.innerHTML = skin.price
         }
 
 
 
-        skinPrice.innerHTML = skin.price
+        
         skinTitle.innerHTML = skin.name;
         skinInfo.appendChild(skinTitle)
         skinInfo.appendChild(skinPrice)
