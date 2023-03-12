@@ -39,7 +39,7 @@
     left: 0;
     width: 100%;
     height: 0;
-    background-color: #d8d8d8;
+    background-color: #e9e7e7;
     z-index: 4;
     transition: 200ms;
     overflow: hidden;
@@ -180,27 +180,35 @@
 }
 
 .menu {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     display: flex;
     justify-content: space-between;
     color: white;
     bottom: 20PX;
     position: absolute;
     background-color: white;
-    width: 60%;
+    width: 50%;
     height: 90px;
     border-radius: 15px;
     z-index: 5;
 }
 
 .menu-button {
+    
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 200ms;
 }
 
 .menu-button img {
-    width: 40px;
+    
+    width: 45px;
+}
+
+.menu-button.active{
+    transform: scale(1.45);
 }
 
 .header {

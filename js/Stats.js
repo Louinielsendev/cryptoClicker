@@ -1,7 +1,7 @@
 var Stats = function () {
     this.score = 0;
     this.streakArray = [];
-    this.cryptoProcent = 5;
+    this.cryptoProcent = 0;
     this.cryptoBonus = 1
     this.streakTime = 0
     this.streakMulti = 1;
@@ -62,7 +62,7 @@ Stats.prototype.setScore = function(){
 
 Stats.prototype.checkStreak = function () {
 
-    const time = Time.current
+    const time = Date.now()
 
     this.streakArray.push(time);
     if (this.streakArray.length >= 2) {

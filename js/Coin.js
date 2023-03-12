@@ -14,7 +14,7 @@ var Coin = function (stats) {
         });
     }
     this.image.addEventListener('touchstart', () => { this.clickDown() })
-    this.image.addEventListener('touchend', (e) => { this.clickUp(e) })
+    this.image.addEventListener('touchend', () => { this.clickUp() })
     this.image.classList.add('coin-img')
 }
 
@@ -24,7 +24,7 @@ Coin.prototype.clickDown = function () {
 
 
 
-Coin.prototype.clickUp = function (e) {
+Coin.prototype.clickUp = function () {
 
     this.stats.saveStats()
     this.stats.setClickScore()
@@ -43,21 +43,5 @@ Coin.prototype.clickUp = function (e) {
         img: Main.coin.image
     });
     Main.drops.push(drop)
-
-    var touchX = e.changedTouches[0].clientX
-    var touchY = e.changedTouches[0].clientY
-    var score = new ScoreAnimation({
-        position: {
-            x: touchX,
-            y: touchY
-        },
-        velocity: {
-            y: -4
-        },
-        size: 10
-    })
-
-    Main.scoreAnimations.push(score);
-    console.log(Main.scoreAnimations)
 }
 

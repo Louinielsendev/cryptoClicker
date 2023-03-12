@@ -9,14 +9,12 @@
     <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     <title>Crypto Clicker</title>
     <script src="js/Canvas.js"></script>
-    <script src="js/Time.js"></script>
     <script src="js/Main.js"></script>
     <script src="js/Coin.js"></script>
     <script src="js/Drop.js"></script>
     <script src="js/Stats.js"></script>
     <script src="js/Shop.js"></script>
     <script src="js/Skin.js"></script>
-    <script src="js/ScoreAnimation.js"></script>
     <script src="js/Background.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,7 +81,7 @@
             <div class="menu-button shop">
                 <img src="img/shop.png" alt="">
             </div>
-            <div class="menu-button clicker">
+            <div class="menu-button clicker active">
                 <img src="img/clicker.png" alt="">
             </div>
         </div>

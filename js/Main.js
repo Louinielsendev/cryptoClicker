@@ -1,7 +1,6 @@
 
 Main = {
     drops: [],
-    scoreAnimations: [],
     skins: [],
     coin: '',
     shop: '',
@@ -13,7 +12,7 @@ Main = {
         Main.getUser()
         Main.generateSkins();
         Main.stats.setAutoScore()
-        Main.stats.getCryptoData()
+        //Main.stats.getCryptoData()
         Main.stats.getCryptoBounus();
         const wrapper = document.querySelector('.wrapper')
         wrapper.appendChild(Main.coin.image)
@@ -22,7 +21,6 @@ Main = {
         Canvas.element.height = wrapper.offsetHeight
         Canvas.element.width = wrapper.offsetWidth
         Canvas.c.fillRect(0, 0, Canvas.element.width, Canvas.element.height);
-        Time.getTime
         Main.animate()
     },
 
@@ -32,13 +30,14 @@ Main = {
 
             localStorage.setItem('userId', id)
             var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "newuser.php?q=" + id, true);
+            xmlhttp.send();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log('succé')
                 }
             };
-            xmlhttp.open("GET", "newuser.php?q=" + id, true);
-            xmlhttp.send();
+           
             Main.shop.createPowerUpsElem();
             
         }
@@ -52,17 +51,25 @@ Main = {
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(this.responseText)
-                    Main.stats.score = Number(data[0].score)
-                    Main.stats.cpcLevel = Number(data[0].clickPerCoin)
-                    Main.stats.acLevel = Number(data[0].clickPerSecond)
-                    Main.shop.createPowerUpsElem();
+                    console.log(data)
+                    if (data.length < 1){
+                        localStorage.removeItem('userId')
+                        Main.getUser()
+                    }
+                    else{
+                        Main.stats.score = Number(data[0].score);
+                        Main.stats.cpcLevel = Number(data[0].clickPerCoin);
+                        Main.stats.acLevel = Number(data[0].clickPerSecond);
+                        Main.stats.setScore();
+                        Main.shop.createPowerUpsElem();
+                    }
+                   
                 }
             };
         }
     },
 
     generateId: function () {
-        console.log('hi')
         const characters = '123456789';
         var result = '';
         const charactersLength = characters.length;
@@ -73,7 +80,7 @@ Main = {
     },
 
     generateSkins: function () {
-        var Bitcoin = new Skin('Bitcoin', 0, false, false);
+        /*var Bitcoin = new Skin('Bitcoin', 0, false, false);
         var Etherum = new Skin('Etherum', 3, false, false)
         var Cardano = new Skin('Cardano', 5, false, false)
         var Cronos = new Skin('Cronos', 20, false, false)
@@ -82,9 +89,28 @@ Main = {
         var Dragonchain = new Skin('Dragonchain', 1000, false, false)
         var Tether = new Skin('Tether', 1500, false, false)
         var YooShi = new Skin('YooShi', 2000, false, false)
-        Main.skins.push(Bitcoin, Etherum, Cardano, Cronos, Dogecoin, Pancakeswap, Dragonchain, Tether, YooShi)
+        Main.skins.push(Bitcoin, Etherum, Cardano, Cronos, Dogecoin, Pancakeswap, Dragonchain, Tether, YooShi)*/
 
+        var xmlhttp = new XMLHttpRequest();
 
+        xmlhttp.open("GET", "getSkins.php", true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var skinData = JSON.parse(this.responseText)
+                skinData.forEach(skinData => {
+                    var skin = new Skin(skinData.name, skinData.price, false, false);
+                    Main.skins.push(skin)
+                });
+                Main.getUserSkins()
+            }
+
+        }
+
+    },
+
+    getUserSkins: function(){
+        
         var userId = localStorage.getItem('userId')
         var xmlhttp = new XMLHttpRequest();
 
@@ -94,23 +120,19 @@ Main = {
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText)
                 console.log(data)
-                if (data.length < 1) {
-                    localStorage.removeItem('userId')
-                    location.reload()
-                }
-                else {
-                    data.forEach(skin => {
-                        var index = skin.skinId - 1
-                        Main.skins[index].owned = true
-                        if (skin.equiped == 1) {
-                            Main.skins[index].active = true
-                        }
+                console.log(Main.skins)
+                data.forEach(skin => {
+                    
+                    var index = skin.skinId - 1
+                    Main.skins[index].owned = true
+                    
+                    if (skin.equiped == 1) {
+                        Main.skins[index].active = true
+                    }
 
-                    });
-                    Main.shop.createSkinElem()
-                    Main.coin.getImageUrl()
-                }
-
+                });
+                Main.shop.createSkinElem()
+                Main.coin.getImageUrl()
             }
 
         };
@@ -131,17 +153,9 @@ Main = {
             }
 
         });
-        Main.scoreAnimations.forEach((score, i) =>{
-            score.update()
-            if (score.position.y < 70) {
-                Main.scoreAnimations.splice(i, 1)
-            }
-        })
+
     }
 }
-
-
-
 
 
 window.addEventListener('load', Main.init);

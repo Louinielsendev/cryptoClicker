@@ -8,29 +8,28 @@ var Shop = function () {
     this.open = false
     this.cpcPrice = 500
     this.acPrice = 500
-    this.toggleElem.addEventListener('click', this.toggleShop.bind(this))
+    this.toggleElem.addEventListener('click', this.openShop.bind(this))
     this.coinToggleElem.addEventListener('click', this.closeShop.bind(this))
     this.closeElem.addEventListener('click', this.closeShop.bind(this))
 }
 
-Shop.prototype.toggleShop = function () {
+Shop.prototype.openShop = function () {
     if (!this.open) {
         this.open = true
         this.shopElem.style.display = 'flex'
         this.shopElem.style.height = '80%'
-    }
-    else {
-        this.open = false
-        this.shopElem.style.height = '0'
-        this.shopElem.style.dispaly = 'none'
+        this.toggleElem.classList.add('active')
+        this.coinToggleElem.classList.remove('active')
     }
 }
 
-Shop.prototype.closeShop = function(){
-    if(this.open){
+Shop.prototype.closeShop = function () {
+    if (this.open) {
         this.open = false
         this.shopElem.style.height = '0'
         this.shopElem.style.dispaly = 'none'
+        this.toggleElem.classList.remove('active')
+        this.coinToggleElem.classList.add('active')
     }
 }
 
@@ -42,22 +41,27 @@ Shop.prototype.createPowerUpsElem = function () {
     var priceElements = document.querySelectorAll('.powerUps--price')
     var levelElements = document.querySelectorAll('.powerUps--level')
     var bonusElements = document.querySelectorAll('.powerUps--bonus')
-    acElement.addEventListener('click', this.addAutoClick.bind(this))
+
     this.acPrice = 500 * 2 ** (Main.stats.acLevel - 1)
-   
+
     priceElements[0].innerHTML = new Intl.NumberFormat("de-DE").format(this.acPrice)
     levelElements[0].innerHTML = `Level: ${Main.stats.acLevel}`
-    bonusElements[0].innerHTML = `${(1 * 1.55**(Main.stats.acLevel - 1)).toFixed(1)}/sec`
-    console.log(Main.stats.acLevel)
+    bonusElements[0].innerHTML = `${(1 * 1.55 ** (Main.stats.acLevel - 1)).toFixed(1)}/sec`
 
-    cpcElement.addEventListener('click', this.addCoinsPerClick.bind(this))
+
     this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
     priceElements[1].innerHTML = new Intl.NumberFormat("de-DE").format(this.cpcPrice)
     levelElements[1].innerHTML = `Level: ${Main.stats.cpcLevel}`
-    bonusElements[1].innerHTML = `${1 * 2**(Main.stats.cpcLevel - 1)}/click`
-    Main.stats.saveStats()
+    bonusElements[1].innerHTML = `${1 * 2 ** (Main.stats.cpcLevel - 1)}/click`
+    
+    if (Main.stats.acLevel == 1 && Main.stats.cpcLevel == 1) {
+        acElement.addEventListener('click', this.addAutoClick.bind(this))
+        cpcElement.addEventListener('click', this.addCoinsPerClick.bind(this))
+    }
 
 }
+
+
 
 Shop.prototype.addAutoClick = function () {
     if (Main.stats.score >= this.acPrice) {
@@ -66,12 +70,11 @@ Shop.prototype.addAutoClick = function () {
         Main.stats.acLevel += 1
 
         this.acPrice = 500 * 2 ** (Main.stats.acLevel - 1)
-
+        console.log(Main.stats.acLevel)
         this.createPowerUpsElem()
     }
     else {
         console.log('du har inte råd')
-        console.log(Main.stats.acLevel)
     }
     Main.stats.saveStats()
 
@@ -83,12 +86,14 @@ Shop.prototype.addCoinsPerClick = function () {
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
         Main.stats.cpcLevel += 1
         this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
-       
+        console.log(Main.stats.cpcLevel)
         this.createPowerUpsElem()
     }
     else {
         console.log('du har inte råd')
     }
+    Main.stats.saveStats()
+
 }
 
 
@@ -133,12 +138,12 @@ Shop.prototype.createSkinElem = function () {
             skinBuyBtn.classList.add('skin--buyButton')
             skinBuyBtn.dataset.id = index
             skinButtons.appendChild(skinBuyBtn)
-            skinPrice.innerHTML = skin.price
+            skinPrice.innerHTML = new Intl.NumberFormat("de-DE").format(skin.price)
         }
 
 
 
-        
+
         skinTitle.innerHTML = skin.name;
         skinInfo.appendChild(skinTitle)
         skinInfo.appendChild(skinPrice)
@@ -212,4 +217,5 @@ Shop.prototype.buySkin = function () {
         Main.shop.skinParentElem.innerHTML = ''
         Main.shop.createSkinElem()
     }
+    Main.stats.saveStats()
 }
