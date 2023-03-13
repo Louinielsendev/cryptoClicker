@@ -25,6 +25,7 @@
 </head>
 
 <body>
+    <div class="topDiv">
     <div class="wrapper">
         <div class="errorModal">
               <div>
@@ -92,4 +93,5 @@
                 <img src="img/clicker.png" alt="">
             </div>
         </div>
+    </div>
     </div>

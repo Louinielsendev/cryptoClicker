@@ -8,11 +8,15 @@
 }
 
 .body {
-
     touch-action: none;
+    
 }
 
-
+.topDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
 .wrapper {
     background-image: url(img/background.jpg);
