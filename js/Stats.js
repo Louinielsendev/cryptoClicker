@@ -12,8 +12,8 @@ var Stats = function () {
 }
 
 
-Stats.prototype.getCryptoData = function(){
-    
+Stats.prototype.getCryptoData = function () {
+
     const options = {
         method: 'GET',
         headers: {
@@ -23,20 +23,30 @@ Stats.prototype.getCryptoData = function(){
     };
     fetch('https://bitcoinaverage-global-bitcoin-index-v1.p.rapidapi.com/indices/global/ticker/BTCUSD', options)
         .then(response => {
-            return response.json()})
+            if (!response.ok) {
+                throw Error()
+            }
+            return response.json()
+        })
         .then(data => {
             this.cryptoProcent = data.changes.percent.day
-            
-            
+            Main.stats.getCryptoBounus();
+
 
         })
-        .catch(err => console.error(err));
+        .catch(() => {
+            var error = new Error()
+            error.display()
+            document.querySelector('.crypto-bonus').innerHTML = `-`;
+        }
+
+        );
 }
 
-Stats.prototype.setAutoScore = function() {
+Stats.prototype.setAutoScore = function () {
     var self = this
-    setInterval(function(){
-        var ac = 1 * 1.55**(self.acLevel - 1)
+    setInterval(function () {
+        var ac = 1 * 1.55 ** (self.acLevel - 1)
         self.score += ac
         self.setScore()
         self.saveStats()
@@ -44,11 +54,11 @@ Stats.prototype.setAutoScore = function() {
 }
 
 Stats.prototype.setClickScore = function () {
+
     
-    this.checkStreak()
-    
+
     var clickScore = 0
-    var cpc = 1 * 2**(this.cpcLevel - 1)
+    var cpc = 1 * 2 ** (this.cpcLevel - 1)
     clickScore = clickScore + cpc
     clickScore = clickScore * this.streakMulti
     clickScore = (clickScore * this.cryptoBonus);
@@ -56,7 +66,7 @@ Stats.prototype.setClickScore = function () {
     this.setScore()
 }
 
-Stats.prototype.setScore = function(){
+Stats.prototype.setScore = function () {
     this.scoreElement.innerHTML = new Intl.NumberFormat("de-DE").format(Math.trunc(this.score))
 }
 
@@ -101,9 +111,9 @@ Stats.prototype.setStreak = function () {
     this.streakElement.innerHTML = `X${this.streakMulti}`
 }
 
-Stats.prototype.saveStats = function(){
-    var userId = localStorage.getItem('userId') 
-    var xmlhttp = new XMLHttpRequest();   
+Stats.prototype.saveStats = function () {
+    var userId = localStorage.getItem('userId')
+    var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", `saveStats.php?id=${userId}&score=${this.score}&cpcLevel=${this.cpcLevel}&acLevel=${this.acLevel}`, true);
     xmlhttp.send();
     xmlhttp.onreadystatechange = function () {
@@ -114,14 +124,15 @@ Stats.prototype.saveStats = function(){
     };
 }
 
-Stats.prototype.getCryptoBounus = function(){
-    if (this.cryptoProcent > 0 && this.cryptoProcent < 1){
+Stats.prototype.getCryptoBounus = function () {
+
+    if (this.cryptoProcent > 0 && this.cryptoProcent < 1) {
         this.cryptoBonus = 1.2
     }
-    else if (this.cryptoProcent > 0 && this.cryptoProcent < 2){
-        this.cryptoBonus = 1.5 
+    else if (this.cryptoProcent > 0 && this.cryptoProcent < 2) {
+        this.cryptoBonus = 1.5
     }
-    else if (this.cryptoProcent > 2){
+    else if (this.cryptoProcent > 2) {
         this.cryptoBonus = 2
 
     }
@@ -129,4 +140,5 @@ Stats.prototype.getCryptoBounus = function(){
         this.cryptoBonus = 1
     }
     document.querySelector('.crypto-bonus').innerHTML = `X${this.cryptoBonus}`;
+
 }

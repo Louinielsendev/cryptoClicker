@@ -8,12 +8,13 @@ var Shop = function () {
     this.open = false
     this.cpcPrice = 500
     this.acPrice = 500
-    this.toggleElem.addEventListener('click', this.openShop.bind(this))
-    this.coinToggleElem.addEventListener('click', this.closeShop.bind(this))
-    this.closeElem.addEventListener('click', this.closeShop.bind(this))
+    this.acElement = document.querySelector('.powerUps--ac')
+    this.cpcElement = document.querySelector('.powerUps--cpc')
+   
 }
 
 Shop.prototype.openShop = function () {
+    console.log(this)
     if (!this.open) {
         this.open = true
         this.shopElem.style.display = 'flex'
@@ -36,8 +37,6 @@ Shop.prototype.closeShop = function () {
 
 Shop.prototype.createPowerUpsElem = function () {
 
-    var acElement = document.querySelector('.powerUps--ac')
-    var cpcElement = document.querySelector('.powerUps--cpc')
     var priceElements = document.querySelectorAll('.powerUps--price')
     var levelElements = document.querySelectorAll('.powerUps--level')
     var bonusElements = document.querySelectorAll('.powerUps--bonus')
@@ -53,11 +52,8 @@ Shop.prototype.createPowerUpsElem = function () {
     priceElements[1].innerHTML = new Intl.NumberFormat("de-DE").format(this.cpcPrice)
     levelElements[1].innerHTML = `Level: ${Main.stats.cpcLevel}`
     bonusElements[1].innerHTML = `${1 * 2 ** (Main.stats.cpcLevel - 1)}/click`
-    
-    if (Main.stats.acLevel == 1 && Main.stats.cpcLevel == 1) {
-        acElement.addEventListener('click', this.addAutoClick.bind(this))
-        cpcElement.addEventListener('click', this.addCoinsPerClick.bind(this))
-    }
+
+
 
 }
 
@@ -74,7 +70,8 @@ Shop.prototype.addAutoClick = function () {
         this.createPowerUpsElem()
     }
     else {
-        console.log('du har inte råd')
+        
+
     }
     Main.stats.saveStats()
 
@@ -87,10 +84,12 @@ Shop.prototype.addCoinsPerClick = function () {
         Main.stats.cpcLevel += 1
         this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
         console.log(Main.stats.cpcLevel)
+       
         this.createPowerUpsElem()
     }
     else {
-        console.log('du har inte råd')
+        
+
     }
     Main.stats.saveStats()
 
@@ -139,10 +138,16 @@ Shop.prototype.createSkinElem = function () {
             skinBuyBtn.dataset.id = index
             skinButtons.appendChild(skinBuyBtn)
             skinPrice.innerHTML = new Intl.NumberFormat("de-DE").format(skin.price)
+            var message = document.createElement('div');
+            var messageText = document.createElement('h2')
+            var textCover = document.createElement('div')
+            messageText.innerHTML = 'Not enough coins!'
+            textCover.appendChild(messageText)
+            message.append(textCover)
+            message.classList.add('skin--message')
+            skinBuyBtn.appendChild(message)
+            
         }
-
-
-
 
         skinTitle.innerHTML = skin.name;
         skinInfo.appendChild(skinTitle)
@@ -157,9 +162,7 @@ Shop.prototype.createSkinElem = function () {
 }
 
 Shop.prototype.changeSkin = function (e) {
-
     var button = e.target
-
     var buttonIndex = button.dataset.id
     Main.skins.forEach((skin, index) => {
         if (skin.owned) {
@@ -170,7 +173,7 @@ Shop.prototype.changeSkin = function (e) {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText)
+                        
                     }
                 };
                 xmlhttp.open("GET", `equipSkin.php?userId=${userId}&skinId=${skinId}&state=1`, true);
@@ -181,7 +184,7 @@ Shop.prototype.changeSkin = function (e) {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText)
+                        
                     }
                 };
                 xmlhttp.open("GET", `equipSkin.php?userId=${userId}&skinId=${skinId}&state=0`, true);
@@ -216,6 +219,18 @@ Shop.prototype.buySkin = function () {
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score)
         Main.shop.skinParentElem.innerHTML = ''
         Main.shop.createSkinElem()
+    }
+    else {
+        const message = this.querySelector('.skin--message')
+        if (message.style.opacity < 1){
+            message.style.opacity = '1'
+            setTimeout(() => {
+                message.style.opacity = '0';
+              }, "2000");
+        
+        }
+           
+       
     }
     Main.stats.saveStats()
 }

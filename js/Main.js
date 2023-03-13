@@ -6,14 +6,30 @@ Main = {
     shop: '',
     stats: '',
     init: function () {
+
+        console.log(navigator.userAgent)
         Main.stats = new Stats();
-        Main.coin = new Coin(Main.stats)
+        Main.coin = new Coin()
         Main.shop = new Shop();
         Main.getUser()
         Main.generateSkins();
         Main.stats.setAutoScore()
         //Main.stats.getCryptoData()
-        Main.stats.getCryptoBounus();
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            Main.coin.image.addEventListener('touchstart', () => { Main.coin.clickDown() })
+            Main.coin.image.addEventListener('touchend', () => { Main.coin.clickUp() })
+        } else {
+            Main.coin.image.addEventListener('mousedown', () => { Main.coin.clickDown() })
+            Main.coin.image.addEventListener('mouseup', () => { Main.coin.clickUp() })
+
+        }
+        Main.shop.toggleElem.addEventListener('click', Main.shop.openShop.bind(Main.shop))
+        Main.shop.coinToggleElem.addEventListener('click', Main.shop.closeShop.bind(Main.shop))
+        Main.shop.closeElem.addEventListener('click', Main.shop.closeShop.bind(Main.shop))
+        Main.shop.acElement.addEventListener('click', Main.shop.addAutoClick.bind(Main.shop))
+        Main.shop.cpcElement.addEventListener('click', Main.shop.addCoinsPerClick.bind(Main.shop))
+        Main.coin.image.classList.add('coin')
+
         const wrapper = document.querySelector('.wrapper')
         wrapper.appendChild(Main.coin.image)
         Canvas.element = document.querySelector('canvas');
@@ -34,12 +50,12 @@ Main = {
             xmlhttp.send();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log('succé')
+                    
                 }
             };
-           
-            Main.shop.createPowerUpsElem();
             
+            Main.shop.createPowerUpsElem();
+
         }
 
         else if (localStorage.getItem('userId')) {
@@ -50,20 +66,21 @@ Main = {
             xmlhttp.send();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText)
                     var data = JSON.parse(this.responseText)
                     console.log(data)
-                    if (data.length < 1){
+                    if (data.length < 1) {
                         localStorage.removeItem('userId')
                         Main.getUser()
                     }
-                    else{
+                    else {
                         Main.stats.score = Number(data[0].score);
                         Main.stats.cpcLevel = Number(data[0].clickPerCoin);
                         Main.stats.acLevel = Number(data[0].clickPerSecond);
                         Main.stats.setScore();
                         Main.shop.createPowerUpsElem();
                     }
-                   
+
                 }
             };
         }
@@ -109,8 +126,8 @@ Main = {
 
     },
 
-    getUserSkins: function(){
-        
+    getUserSkins: function () {
+
         var userId = localStorage.getItem('userId')
         var xmlhttp = new XMLHttpRequest();
 
@@ -122,10 +139,10 @@ Main = {
                 console.log(data)
                 console.log(Main.skins)
                 data.forEach(skin => {
-                    
+
                     var index = skin.skinId - 1
                     Main.skins[index].owned = true
-                    
+
                     if (skin.equiped == 1) {
                         Main.skins[index].active = true
                     }

@@ -15,6 +15,7 @@
     <script src="js/Stats.js"></script>
     <script src="js/Shop.js"></script>
     <script src="js/Skin.js"></script>
+    <script src="js/Error.js"></script>
     <script src="js/Background.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +26,12 @@
 
 <body>
     <div class="wrapper">
+        <div class="errorModal">
+              <div>
+                <h3 class="errorModal--message"></h3>
+                <button class="errorModal--button">OK, Play!</button>
+                </div>       
+        </div>
         <div class="modal">
             <div class="modal--content">
                 <div class="modal--exit"><img src="img/close.png" alt=""></div>
@@ -45,7 +52,7 @@
                         <h2 class='powerUps--level'>Level:</h2>
                         <h2 class='powerUps--bonus'>/click</h2>
                         <h1 class='powerUps--price'>0</h1>
-        
+                        
                     </div>
                     </div>
                 </div>
@@ -63,11 +70,11 @@
            
             <div class="perc bonus">
                 <h3>CRYPTO <br> BONUS</h3>
-                <h3 class="crypto-bonus">100%</h3>
+                <h3 class="crypto-bonus">X1</h3>
 
             </div>
             <div>
-                <h2 class="score">0</h2>
+                <h2 class="score"></h2>
             </div>
             <div class="perc streak">
                 <h3 class="streak-multi">X1</h3>

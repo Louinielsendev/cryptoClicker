@@ -92,6 +92,7 @@
 .powerUps--ac {
     padding: 10px;
     font-size: .6em;
+    position: relative;
 
 }
 
@@ -170,6 +171,46 @@
 
 .skin--buyButton {
     background-color: #05cf05;
+    position: relative;
+}
+
+.skin--message {
+    position: absolute;
+    width: 180px ;
+    height: 40px;
+    background-color: rgb(238, 238, 238);
+    left: -200px;
+    top: 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: 400ms;
+}
+
+.skin--message div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.skin--message div::before {
+    position: absolute;
+    width: 15px;
+
+    height: 15px;
+    right: -5px;
+    background-color: rgb(238, 238, 238);
+   content: '3';
+    transform: rotate(45deg);
+    color:rgb(238, 238, 238) ;
+}
+
+.skin--message h2 {
+    font-size: 1rem;
+    color: black;
 }
 
 .coin {
@@ -177,6 +218,7 @@
     transition: 50ms;
     position: absolute;
     top: 32vh;
+    
 }
 
 .menu {
@@ -262,7 +304,58 @@
 }
 
 .crypto-bonus {
-    color: #05cf05;
     font-size: 2em;
 }
 
+.errorModal {
+   
+    position: absolute;
+    background-color: rgb(0, 0, 0, 0.3);
+    height: 100vh;
+    width: 100%;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    display: none;
+    
+}
+
+.errorModal div {
+    margin-right: auto;
+    margin-left: auto;
+    width: 65%;
+    height: 20%;
+    z-index: 950;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border-style: solid;
+    border-color: red;
+   
+}
+
+.errorModal--message {
+    margin-bottom: 20px;
+}
+
+.errorModal--button {
+    padding: 10px;
+    background-color: white;
+    border-color: black;
+    border-radius: 10px;
+}
+
+@media (max-width: 350px) {
+    .skin-wrapper h2 {
+        font-size: 15px;
+    }
+    
+  }
+
+  @media (max-width: 300px) {
+    .skin-wrapper h2 {
+        font-size: 11px;
+    }
+    
+  }
