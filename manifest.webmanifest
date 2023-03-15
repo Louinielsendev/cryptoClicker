@@ -2,8 +2,8 @@
     
     "name": "Crypto Clicker",
     "short_name": "Crypto Clicker",
-    "start_url": "index.html",
-    "display": "fullscreen",
+    "start_url": "index.php",
+    "display": "standalone",
     "background_color": "#000",
     "description": "click game",
     "icons": [{

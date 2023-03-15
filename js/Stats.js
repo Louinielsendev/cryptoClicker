@@ -55,8 +55,6 @@ Stats.prototype.setAutoScore = function () {
 
 Stats.prototype.setClickScore = function () {
 
-    
-
     var clickScore = 0
     var cpc = 1 * 2 ** (this.cpcLevel - 1)
     clickScore = clickScore + cpc
@@ -112,16 +110,18 @@ Stats.prototype.setStreak = function () {
 }
 
 Stats.prototype.saveStats = function () {
+    console.log('saving')
     var userId = localStorage.getItem('userId')
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", `saveStats.php?id=${userId}&score=${this.score}&cpcLevel=${this.cpcLevel}&acLevel=${this.acLevel}`, true);
-    xmlhttp.send();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-
-
-        }
-    };
+    fetch(`saveStats.php?id=${userId}&score=${this.score}&cpcLevel=${this.cpcLevel}&acLevel=${this.acLevel}`, Main.options)
+            .then(response => {
+                if (!response.ok) {
+                    throw Error()
+                }
+            })
+            .catch(() => {
+                console.log('error')
+            })
+   
 }
 
 Stats.prototype.getCryptoBounus = function () {

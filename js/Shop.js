@@ -10,7 +10,8 @@ var Shop = function () {
     this.acPrice = 500
     this.acElement = document.querySelector('.powerUps--ac')
     this.cpcElement = document.querySelector('.powerUps--cpc')
-   
+    
+
 }
 
 Shop.prototype.openShop = function () {
@@ -69,10 +70,7 @@ Shop.prototype.addAutoClick = function () {
         console.log(Main.stats.acLevel)
         this.createPowerUpsElem()
     }
-    else {
-        
-
-    }
+    
     Main.stats.saveStats()
 
 }
@@ -84,12 +82,8 @@ Shop.prototype.addCoinsPerClick = function () {
         Main.stats.cpcLevel += 1
         this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
         console.log(Main.stats.cpcLevel)
-       
-        this.createPowerUpsElem()
-    }
-    else {
-        
 
+        this.createPowerUpsElem()
     }
     Main.stats.saveStats()
 
@@ -146,7 +140,7 @@ Shop.prototype.createSkinElem = function () {
             message.append(textCover)
             message.classList.add('skin--message')
             skinBuyBtn.appendChild(message)
-            
+
         }
 
         skinTitle.innerHTML = skin.name;
@@ -170,25 +164,30 @@ Shop.prototype.changeSkin = function (e) {
             var userId = localStorage.getItem('userId')
             if (index == buttonIndex) {
                 skin.active = true
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        
-                    }
-                };
-                xmlhttp.open("GET", `equipSkin.php?userId=${userId}&skinId=${skinId}&state=1`, true);
-                xmlhttp.send();
+                fetch(`equipSkin.php?userId=${userId}&skinId=${skinId}&state=1`, Main.options)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw Error()
+                        }
+                    })
+                    .catch(() => {
+                        console.log('error')
+                    })
+
+              
             }
             else {
                 skin.active = false
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        
-                    }
-                };
-                xmlhttp.open("GET", `equipSkin.php?userId=${userId}&skinId=${skinId}&state=0`, true);
-                xmlhttp.send();
+                fetch(`equipSkin.php?userId=${userId}&skinId=${skinId}&state=0`, Main.options)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw Error()
+                        }
+                    })
+                    .catch(() => {
+                        console.log('error')
+                    })
+              
             }
         }
     });
@@ -204,15 +203,16 @@ Shop.prototype.buySkin = function () {
     var userId = localStorage.getItem('userId')
 
     if (Main.stats.score >= Main.skins[index].price) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText)
-            }
-        };
-        xmlhttp.open("GET", `buySkin.php?userId=${userId}&skinId=${skinId}`, true);
-        xmlhttp.send();
-
+        fetch(`buySkin.php?userId=${userId}&skinId=${skinId}`, Main.options)
+            .then(response => {
+                if (!response.ok) {
+                    throw Error()
+                }
+            })
+            .catch(() => {
+                console.log('error')
+            })
+      
 
         Main.skins[index].owned = true;
         Main.stats.score = (Main.stats.score - Main.skins[index].price)
@@ -222,15 +222,15 @@ Shop.prototype.buySkin = function () {
     }
     else {
         const message = this.querySelector('.skin--message')
-        if (message.style.opacity < 1){
+        if (message.style.opacity < 1) {
             message.style.opacity = '1'
             setTimeout(() => {
                 message.style.opacity = '0';
-              }, "2000");
-        
+            }, "2000");
+
         }
-           
-       
+
+
     }
     Main.stats.saveStats()
 }

@@ -1,8 +1,8 @@
 <?php
-$serverName = "localhost";
-$dbUserName = "root";
-$dbPassword = "Casiojbliphone1";
-$dbName = "click-game";
+$serverName = "";
+$dbUserName = "ll223vk";
+$dbPassword = "W5dr4L";
+$dbName = "clickGame";
 
 $con = mysqli_connect($serverName, $dbUserName, $dbPassword, $dbName);
 if (!$con) {
