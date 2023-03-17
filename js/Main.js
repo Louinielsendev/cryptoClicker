@@ -95,7 +95,7 @@ Main = {
             .catch(() => {
                 console.log('error')
             })
-            
+            Main.generateSkins();
         }
     },
 
