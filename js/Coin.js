@@ -1,3 +1,6 @@
+/**
+ * Klass för myntet som användare klickar på.
+ */
 var Coin = function () {
     const image = new Image()
     this.image = image
@@ -13,12 +16,17 @@ var Coin = function () {
     
 }
 
+/**
+ * Skalar ner myntet när användaren trycker på det
+ */
 Coin.prototype.clickDown = function () {
     this.image.style.transform = 'scale(.95)'
 }
 
 
-
+/**
+ * skapar en ny instans av klassen Drop. kör även setClickScore för att lägga till mynt.
+ */
 Coin.prototype.clickUp = function () {
 
     Main.stats.saveStats()

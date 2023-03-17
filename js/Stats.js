@@ -1,3 +1,6 @@
+/**
+ * klass för statistik
+ */
 var Stats = function () {
     this.score = 0;
     this.streakArray = [];
@@ -11,7 +14,9 @@ var Stats = function () {
     this.streakElement = document.querySelector('.streak-multi')
 }
 
-
+/**
+ * Hämtar data om Bitcoin från api
+ */
 Stats.prototype.getCryptoData = function () {
 
     const options = {
@@ -43,6 +48,9 @@ Stats.prototype.getCryptoData = function () {
         );
 }
 
+/**
+ * genererar nya mynt varje sekund
+ */
 Stats.prototype.setAutoScore = function () {
     var self = this
     setInterval(function () {
@@ -53,6 +61,9 @@ Stats.prototype.setAutoScore = function () {
     }, 1000)
 }
 
+/**
+ * genererar mynt varje gång en användare klickar
+ */
 Stats.prototype.setClickScore = function () {
 
     var clickScore = 0
@@ -62,12 +73,19 @@ Stats.prototype.setClickScore = function () {
     clickScore = (clickScore * this.cryptoBonus);
     this.score += clickScore
     this.setScore()
+    this.checkStreak()
 }
 
+/**
+ * skriver ut poängen
+ */
 Stats.prototype.setScore = function () {
     this.scoreElement.innerHTML = new Intl.NumberFormat("de-DE").format(Math.trunc(this.score))
 }
 
+/**
+ * Kollar så att användare klickar tillräckligt snabbt för att behålla sin streak
+ */
 Stats.prototype.checkStreak = function () {
 
     const time = Date.now()
@@ -90,6 +108,9 @@ Stats.prototype.checkStreak = function () {
     }
 }
 
+/**
+ * ger bonus beroende på hur länge användare har klickat.
+ */
 Stats.prototype.setStreak = function () {
     if (this.streakTime < 5000) {
         this.streakMulti = 1
@@ -109,8 +130,12 @@ Stats.prototype.setStreak = function () {
     this.streakElement.innerHTML = `X${this.streakMulti}`
 }
 
+
+/**
+ * sparar användarens statistik i databasen.
+ */
 Stats.prototype.saveStats = function () {
-    console.log('saving')
+   
     var userId = localStorage.getItem('userId')
     fetch(`saveStats.php?id=${userId}&score=${this.score}&cpcLevel=${this.cpcLevel}&acLevel=${this.acLevel}`, Main.options)
             .then(response => {

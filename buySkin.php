@@ -6,7 +6,6 @@ $skinId = intval($_GET['skinId']);
 
 
 
-$sql="insert into ownSkin values ($userId, $skinId, 0)";
+$sql="insert into ownskin values ($userId, $skinId, 0)";
 mysqli_query($con,$sql);
 
-echo $userId;

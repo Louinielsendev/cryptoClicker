@@ -1,3 +1,6 @@
+/**
+ * Klass för shop
+ */
 var Shop = function () {
     this.shopElem = document.querySelector('.modal')
     this.toggleElem = document.querySelector('.shop')
@@ -14,8 +17,11 @@ var Shop = function () {
 
 }
 
+/**
+ * öppnar shopen
+ */
 Shop.prototype.openShop = function () {
-    console.log(this)
+  
     if (!this.open) {
         this.open = true
         this.shopElem.style.display = 'flex'
@@ -25,6 +31,10 @@ Shop.prototype.openShop = function () {
     }
 }
 
+
+/**
+ * stänger shopen
+ */
 Shop.prototype.closeShop = function () {
     if (this.open) {
         this.open = false
@@ -35,7 +45,9 @@ Shop.prototype.closeShop = function () {
     }
 }
 
-
+/**
+ * skapar element för uppgarderingarna
+ */
 Shop.prototype.createPowerUpsElem = function () {
 
     var priceElements = document.querySelectorAll('.powerUps--price')
@@ -59,7 +71,9 @@ Shop.prototype.createPowerUpsElem = function () {
 }
 
 
-
+/**
+ * ökar nivån på mynt/sec
+ */
 Shop.prototype.addAutoClick = function () {
     if (Main.stats.score >= this.acPrice) {
         Main.stats.score = Main.stats.score - this.acPrice;
@@ -67,7 +81,6 @@ Shop.prototype.addAutoClick = function () {
         Main.stats.acLevel += 1
 
         this.acPrice = 500 * 2 ** (Main.stats.acLevel - 1)
-        console.log(Main.stats.acLevel)
         this.createPowerUpsElem()
     }
     
@@ -75,13 +88,16 @@ Shop.prototype.addAutoClick = function () {
 
 }
 
+/**
+ * ökar nivån på mynt/click
+ */
 Shop.prototype.addCoinsPerClick = function () {
     if (Main.stats.score >= this.cpcPrice) {
         Main.stats.score = Main.stats.score - this.cpcPrice;
         Main.stats.scoreElement.innerHTML = Math.trunc(Main.stats.score);
         Main.stats.cpcLevel += 1
         this.cpcPrice = 500 * 6 ** (Main.stats.cpcLevel - 1)
-        console.log(Main.stats.cpcLevel)
+
 
         this.createPowerUpsElem()
     }
@@ -89,7 +105,9 @@ Shop.prototype.addCoinsPerClick = function () {
 
 }
 
-
+/**
+ * skapar element för skins
+ */
 Shop.prototype.createSkinElem = function () {
     Main.skins.forEach((skin, index) => {
 
@@ -155,6 +173,10 @@ Shop.prototype.createSkinElem = function () {
     })
 }
 
+/**
+ * byter skin och sparar i databasen
+ * @param {object}
+ */
 Shop.prototype.changeSkin = function (e) {
     var button = e.target
     var buttonIndex = button.dataset.id
@@ -197,6 +219,9 @@ Shop.prototype.changeSkin = function (e) {
 
 }
 
+/**
+ * köper skin och sparar i databasen
+ */
 Shop.prototype.buySkin = function () {
     var index = parseInt(this.dataset.id)
     var skinId = index + 1;

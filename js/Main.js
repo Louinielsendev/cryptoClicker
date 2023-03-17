@@ -1,4 +1,6 @@
-
+/**
+ * Objekt för att initiera spelet
+ */
 Main = {
     options :{
         method: 'GET'
@@ -15,9 +17,8 @@ Main = {
         Main.coin = new Coin()
         Main.shop = new Shop();
         Main.getUser()
-        Main.generateSkins();
         Main.stats.setAutoScore()
-        //Main.stats.getCryptoData()
+        Main.stats.getCryptoData()
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             Main.coin.image.addEventListener('touchstart', () => { Main.coin.clickDown() })
             Main.coin.image.addEventListener('touchend', () => { Main.coin.clickUp() })
@@ -61,17 +62,8 @@ Main = {
                 console.log('error')
             })
 
-            fetch(`buySkin.php?`, Main.options)
-            .then(response => {
-                if (!response.ok){
-                    throw Error()
-                }
-            })
-            .catch(() => {
-                console.log('error')
-            })
-
-
+           
+            Main.newUserSkin(id);
             Main.shop.createPowerUpsElem();
 
         }
@@ -80,14 +72,14 @@ Main = {
             var userId = localStorage.getItem('userId')
             fetch("getUser.php?q=" + userId, Main.options)
             .then(response => {
-                console.log(response)
+               
                 if (!response.ok){
                     throw Error(response)
                 }
                 return response.json()
             })
             .then(data => {
-                console.log(data)
+               
                 if (data.length < 1) {
                     localStorage.removeItem('userId')
                     Main.getUser()
@@ -100,11 +92,27 @@ Main = {
                     Main.shop.createPowerUpsElem();
                 }
             })
-            .catch((response) => {
-                console.log(response)
+            .catch(() => {
+                console.log('error')
             })
             
         }
+    },
+
+    newUserSkin: function(id){
+        fetch(`newUserFirstSkin.php?id=${id}`, Main.options)
+        .then(response => {
+            if (!response.ok){
+                throw Error()
+            }
+            console.log(response)
+        })
+
+        .catch(() => {
+            console.log('error')
+        })
+
+        Main.generateSkins();
     },
 
     generateId: function () {
@@ -121,7 +129,7 @@ Main = {
         
         fetch("getSkins.php", Main.options)
         .then(response => {
-            console.log(response)
+            
             if (!response.ok){
                 throw Error(response)
             }
@@ -134,8 +142,8 @@ Main = {
             });
             Main.getUserSkins()
         })
-        .catch((response) => {
-            console.log(response)
+        .catch(() => {
+            console.log('error')
         })
       
 
@@ -153,6 +161,7 @@ Main = {
             return response.json()
         })
         .then(data => {
+            console.log(data)
             data.forEach(skin => {
 
                 var index = skin.skinId - 1

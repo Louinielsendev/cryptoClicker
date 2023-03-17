@@ -1,3 +1,6 @@
+/**
+ * Klass för bakgrund.
+ */
 var Background = function(){
     this.position = {
         x: 0,
@@ -10,6 +13,9 @@ var Background = function(){
     this.image = image;
 }
 
+/**
+ * Ritar ut bakgrunden på canvas-element.
+ */
 Background.prototype.draw = function(){
     Canvas.c.drawImage(this.image, this.position.x , this.position.y , this.width, this.height);
 }

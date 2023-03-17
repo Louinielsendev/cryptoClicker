@@ -1,3 +1,6 @@
+/**
+ * klass för skin
+ */
 var Skin = function(name, price, active, owned){
     this.name = name
     this.price = price;
